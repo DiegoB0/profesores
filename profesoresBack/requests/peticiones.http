@@ -1,0 +1,7 @@
+//Variables
+@api = http://localhost:5000/profesores
+
+GET {{api}}
+
+###
+GET {{api}}/1
