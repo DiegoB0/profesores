@@ -1,0 +1,40 @@
+
+@api = http://localhost:5000/asesorias
+
+###
+GET {{api}}
+
+###
+GET {{api}}/20
+
+###
+GET {{api}}/count
+
+###
+POST {{api}}
+Content-Type: application/json
+
+{
+    "nombre_alumno": "Diego Elizalde",
+    "tema": "Stack navigator",
+    "observaciones": "dudas",
+    "fecha_inicio": "2023-02-14",
+    "fecha_fin": "2023-02-28",
+    "profesor": 2
+}
+
+###
+DELETE {{api}}/31
+
+###
+PUT {{api}}/24
+Content-Type: application/json
+
+{  
+
+    "nombre_alumno": "Gustavo Campagne",
+    "tema": "Axios",
+    "observaciones": "dudas",
+    "fecha_inicio": "2023-02-14",
+    "fecha_fin": "2023-02-28"
+}

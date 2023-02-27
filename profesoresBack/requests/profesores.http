@@ -1,0 +1,60 @@
+@api = http://localhost:5000/profesores
+
+GET {{api}}
+
+###
+GET {{api}}/2
+
+###
+GET {{api}}/count
+
+###
+POST {{api}}
+Content-Type: application/json
+
+{
+    "clave": 2,
+    "nombres": "Diego",
+    "apellidos": "Elizalde",
+    "fnacimiento": "2023-02-14",
+    "email": "dago@gmail.com",
+    "sexo": "Masculino",
+    "estadocivil": "Soltero",
+    "tcasa": "(618)3210822",
+    "curp": "GAFE031203HDGRLDA6",
+    "tcelular": "(618)3210822",
+    "calle": "Ruben padilla #503",
+    "colonia": "valle del guadiana",
+    "cp": 34166,
+    "municipio": "durango",
+    "estado": "durango",
+    "estatus": "inactivo"
+}
+
+###
+DELETE {{api}}/2
+
+###
+PUT {{api}}/2
+Content-Type: application/json
+
+{  
+    "nombres": "Pepe",
+    "apellidos": "El niño polla",
+    "fnacimiento": "2023-02-14",
+    "email": "dago@gmail.com",
+    "sexo": "Masculino",
+    "estadocivil": "Soltero",
+    "tcasa": "(618)3210822",
+    "curp": "GAFE031203HDGRLDA6",
+    "tcelular": "(618)3210822",
+    "calle": "Ruben padilla #503",
+    "colonia": "valle del guadiana",
+    "cp": 34166,
+    "municipio": "durango",
+    "estado": "durango",
+    "estatus": "inactivo"
+}
+
+
+

@@ -1,0 +1,39 @@
+@api = http://localhost:5000/tutorias/grupales
+
+GET {{api}}
+
+###
+GET {{api}}/1
+
+###
+GET {{api}}/count
+
+###
+POST {{api}}
+Content-Type: application/json
+
+{
+    "fecha_inicio": "2023-02-14",
+    "fecha_fin": "2023-02-28",
+    "tipo_tutoria": "personal",
+    "acciones_implementadas": "curso de manejo de ansiedad",
+    "estatus": "Concluida",
+    "profesor": 1
+}
+
+###
+DELETE {{api}}/1
+
+###
+PUT {{api}}/2
+Content-Type: application/json
+
+{  
+
+    "fecha_inicio": "2023-02-14",
+    "fecha_fin": "2023-02-28",
+    "tipo_tutoria": "socioeconomica",
+    "acciones_implementadas": "curso de manejo de ansiedad",
+    "estatus": "Concluida",
+    "profesor": 1
+}
