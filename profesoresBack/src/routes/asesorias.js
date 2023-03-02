@@ -4,11 +4,9 @@ import {
 	getAsesoria,
 	getAsesorias,
 	getAsesoriasCount,
-	getAsesporias,
 	saveAsesoria,
 	updateAsesoria,
 } from '../controllers/asesorias';
-
 const router = Router();
 
 /**

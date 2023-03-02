@@ -1,10 +1,37 @@
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useApp } from '../context/AppContext';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useProfesores } from '../../context/ProfesoresContext';
 
 function ProfesoresAgregar() {
-	const { createProfesor, getProfesor, updateProfesor } = useApp();
+	const { createProfesor, getProfesor, updateProfesor } = useProfesores();
+
+	const notifyProfesorUpdated = () =>
+		toast.success('Profesor actualizado con exito!', {
+			position: 'top-right',
+			autoClose: 3000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: 'light',
+		});
+
+	const notifyProfesorPosted = () =>
+		toast.success('Profesor agregado con exito!', {
+			position: 'top-right',
+			autoClose: 3000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: 'light',
+		});
+
 	const [profesor, setProfesor] = useState({
 		clave: '',
 		nombres: '',
@@ -22,6 +49,7 @@ function ProfesoresAgregar() {
 		municipio: '',
 		estado: '',
 		estatus: '',
+		password: '',
 	});
 
 	const params = useParams();
@@ -49,6 +77,7 @@ function ProfesoresAgregar() {
 					municipio: profesor.municipio,
 					estado: profesor.estado,
 					estatus: profesor.estatus,
+					password: profesor.password,
 				});
 			}
 		};
@@ -60,16 +89,19 @@ function ProfesoresAgregar() {
 			<h1 className="text-xl font-extrabold uppercase text-gray-700">
 				{params.id ? 'Actualizar Profesor' : 'Nuevo Profesor'}
 			</h1>
+
 			<Formik
 				initialValues={profesor}
 				enableReinitialize={true}
-				onSubmit={async (values, actions) => {
+				onSubmit={async (values) => {
 					if (params.id) {
 						await updateProfesor(params.id, values);
 						navigate('/profesores');
+						notifyProfesorUpdated();
 					} else {
 						await createProfesor(values);
 						navigate('/profesores');
+						notifyProfesorPosted();
 					}
 
 					setProfesor({
@@ -89,6 +121,7 @@ function ProfesoresAgregar() {
 						municipio: '',
 						estado: '',
 						estatus: '',
+						password: '',
 					});
 				}}
 			>
@@ -108,6 +141,7 @@ function ProfesoresAgregar() {
 									name="clave"
 									onChange={handleChange}
 									value={values.clave}
+									required
 								/>
 							</div>
 						</div>
@@ -124,6 +158,7 @@ function ProfesoresAgregar() {
 									name="nombres"
 									onChange={handleChange}
 									value={values.nombres}
+									required
 								/>
 							</div>
 
@@ -138,6 +173,7 @@ function ProfesoresAgregar() {
 									name="apellidos"
 									onChange={handleChange}
 									value={values.apellidos}
+									required
 								/>
 							</div>
 						</div>
@@ -154,6 +190,7 @@ function ProfesoresAgregar() {
 									name="fnacimiento"
 									onChange={handleChange}
 									value={values.fnacimiento}
+									required
 								/>
 							</div>
 						</div>
@@ -170,6 +207,7 @@ function ProfesoresAgregar() {
 									name="email"
 									onChange={handleChange}
 									value={values.email}
+									required
 								/>
 							</div>
 						</div>
@@ -185,6 +223,7 @@ function ProfesoresAgregar() {
 										name="sexo"
 										onChange={handleChange}
 										value={values.sexo}
+										required
 									>
 										<option>Selecciona el sexo</option>
 										<option value="Masculino">Masculino</option>
@@ -213,6 +252,7 @@ function ProfesoresAgregar() {
 										name="estadocivil"
 										onChange={handleChange}
 										value={values.estadocivil}
+										required
 									>
 										<option>Selecciona el estado civil</option>
 										<option value="Soltero">Soltero</option>
@@ -243,6 +283,7 @@ function ProfesoresAgregar() {
 									name="curp"
 									onChange={handleChange}
 									value={values.curp}
+									required
 								/>
 							</div>
 						</div>
@@ -259,6 +300,7 @@ function ProfesoresAgregar() {
 									name="tcasa"
 									onChange={handleChange}
 									value={values.tcasa}
+									required
 								/>
 							</div>
 
@@ -273,6 +315,7 @@ function ProfesoresAgregar() {
 									name="tcelular"
 									onChange={handleChange}
 									value={values.tcelular}
+									required
 								/>
 							</div>
 						</div>
@@ -289,6 +332,7 @@ function ProfesoresAgregar() {
 									name="calle"
 									onChange={handleChange}
 									value={values.calle}
+									required
 								/>
 							</div>
 
@@ -303,6 +347,7 @@ function ProfesoresAgregar() {
 									name="colonia"
 									onChange={handleChange}
 									value={values.colonia}
+									required
 								/>
 							</div>
 						</div>
@@ -319,6 +364,7 @@ function ProfesoresAgregar() {
 									name="cp"
 									onChange={handleChange}
 									value={values.cp}
+									required
 								/>
 							</div>
 
@@ -333,6 +379,7 @@ function ProfesoresAgregar() {
 									name="municipio"
 									onChange={handleChange}
 									value={values.municipio}
+									required
 								/>
 							</div>
 
@@ -347,6 +394,7 @@ function ProfesoresAgregar() {
 									name="estado"
 									onChange={handleChange}
 									value={values.estado}
+									required
 								/>
 							</div>
 						</div>
@@ -362,6 +410,7 @@ function ProfesoresAgregar() {
 										name="estatus"
 										onChange={handleChange}
 										value={values.estatus}
+										required
 									>
 										<option value="Inactivo">Inactivo</option>
 										<option value="Activo">Activo</option>
@@ -379,9 +428,28 @@ function ProfesoresAgregar() {
 							</div>
 						</div>
 
+						<div className="flex flex-wrap -mx-3 mb-6">
+							<div className="w-full px-3">
+								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+									Password
+								</label>
+								<input
+									className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+									placeholder="1234"
+									type="password"
+									name="password"
+									onChange={handleChange}
+									value={values.password}
+									required
+								/>
+							</div>
+						</div>
+						<ToastContainer />
+
 						{/** Div del Boton */}
 						<div className="block w-full mt-4">
 							<button
+								onClick={notifyProfesorPosted}
 								type="submit"
 								disabled={isSubmitting}
 								className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 w-full"

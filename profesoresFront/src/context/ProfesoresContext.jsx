@@ -7,17 +7,17 @@ import {
 	updateProfesorRequest,
 } from '../api/api.profesores';
 
-export const AppContext = createContext();
+export const ProfesoresContext = createContext();
 
-export const useApp = () => {
-	const context = useContext(AppContext);
+export const useProfesores = () => {
+	const context = useContext(ProfesoresContext);
 	if (!context) {
-		throw new Error('useApp must be within a AppContextProvider');
+		throw new Error('useApp must be within a ProfesoresContextProvider');
 	}
 	return context;
 };
 
-export const AppContextProvider = ({ children }) => {
+export const ProfesoresContextProvider = ({ children }) => {
 	const [profesores, setProfesores] = useState([]);
 
 	async function loadProfesores() {
@@ -33,6 +33,7 @@ export const AppContextProvider = ({ children }) => {
 			console.error(error);
 		}
 	};
+
 	const createProfesor = async (profesor) => {
 		try {
 			const response = await createProfesorRequest(profesor);
@@ -61,7 +62,7 @@ export const AppContextProvider = ({ children }) => {
 	};
 
 	return (
-		<AppContext.Provider
+		<ProfesoresContext.Provider
 			value={{
 				profesores,
 				loadProfesores,
@@ -72,6 +73,6 @@ export const AppContextProvider = ({ children }) => {
 			}}
 		>
 			{children}
-		</AppContext.Provider>
+		</ProfesoresContext.Provider>
 	);
 };

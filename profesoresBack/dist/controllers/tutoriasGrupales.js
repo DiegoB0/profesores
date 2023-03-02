@@ -26,13 +26,16 @@ var getTutorias = /*#__PURE__*/function () {
         case 2:
           connection = _context.sent;
           _context.next = 5;
-          return connection.query('SELECT * FROM tutoria_grupal');
+          return connection.query('SELECT tutoria_grupal.id, tutoria_grupal.fecha_inicio, tutoria_grupal.fecha_fin, tutoria_grupal.tipo_tutoria, tutoria_grupal.acciones_implementadas, tutoria_grupal.estatus, profesores.nombres as nombre_profesor, profesores.apellidos as apellido_profesor FROM tutoria_grupal JOIN profesores ON tutoria_grupal.profesor = profesores.clave');
         case 5:
           _yield$connection$que = _context.sent;
           _yield$connection$que2 = _slicedToArray(_yield$connection$que, 1);
           rows = _yield$connection$que2[0];
           console.log(rows);
-          res.sendStatus(200);
+          res.json({
+            status: 200,
+            data: rows
+          });
         case 10:
         case "end":
           return _context.stop();
@@ -61,7 +64,7 @@ var getTutoria = /*#__PURE__*/function () {
           _yield$connection$que4 = _slicedToArray(_yield$connection$que3, 1);
           rows = _yield$connection$que4[0];
           console.log(rows[0]);
-          res.sendStatus(200);
+          res.json(rows[0]);
         case 10:
         case "end":
           return _context2.stop();
@@ -104,7 +107,7 @@ var getTutoriasCount = /*#__PURE__*/function () {
 exports.getTutoriasCount = getTutoriasCount;
 var saveTutoria = /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(req, res) {
-    var connection, _yield$connection$que7, _yield$connection$que8, results;
+    var connection, tipo_tutoria, _yield$connection$que7, _yield$connection$que8, results;
     return _regeneratorRuntime().wrap(function _callee4$(_context4) {
       while (1) switch (_context4.prev = _context4.next) {
         case 0:
@@ -112,14 +115,15 @@ var saveTutoria = /*#__PURE__*/function () {
           return (0, _database.connect)();
         case 2:
           connection = _context4.sent;
-          _context4.next = 5;
-          return connection.query('INSERT INTO tutoria_grupal(fecha_inicio, fecha_fin, tipo_tutoria, acciones_implementadas, estatus, profesor) VALUES (?, ?, ?, ?, ?, ?)', [req.body.fecha_inicio, req.body.fecha_fin, req.body.tipo_tutoria, req.body.acciones_implementadas, req.body.estatus, req.body.profesor]);
-        case 5:
+          tipo_tutoria = [req.body.atencion_academica + req.body.socioeconomica + req.body.personal + req.body.apoyo_conocimiento];
+          _context4.next = 6;
+          return connection.query('INSERT INTO tutoria_grupal(fecha_inicio, fecha_fin, tipo_tutoria, acciones_implementadas, estatus, profesor) VALUES (?, ?, ?, ?, ?, ?)', [req.body.fecha_inicio, req.body.fecha_fin, tipo_tutoria, req.body.acciones_implementadas, req.body.estatus, req.body.profesor]);
+        case 6:
           _yield$connection$que7 = _context4.sent;
           _yield$connection$que8 = _slicedToArray(_yield$connection$que7, 1);
           results = _yield$connection$que8[0];
           res.sendStatus(200);
-        case 9:
+        case 10:
         case "end":
           return _context4.stop();
       }
@@ -158,7 +162,7 @@ var deleteTutoria = /*#__PURE__*/function () {
 exports.deleteTutoria = deleteTutoria;
 var updateTutoria = /*#__PURE__*/function () {
   var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(req, res) {
-    var connection, results;
+    var connection, tipo_tutoria, results;
     return _regeneratorRuntime().wrap(function _callee6$(_context6) {
       while (1) switch (_context6.prev = _context6.next) {
         case 0:
@@ -166,13 +170,26 @@ var updateTutoria = /*#__PURE__*/function () {
           return (0, _database.connect)();
         case 2:
           connection = _context6.sent;
-          _context6.next = 5;
-          return connection.query('UPDATE tutoria_grupal SET ? WHERE id = ?', [req.body, req.params.id]);
-        case 5:
+          if (req.body.atencion_academica == null) {
+            req.body.atencion_academica = '';
+          }
+          if (req.body.socioeconomica == null) {
+            req.body.socioeconomica = '';
+          }
+          if (req.body.personal == null) {
+            req.body.personal = '';
+          }
+          if (req.body.apoyo_conocimiento == null) {
+            req.body.apoyo_conocimiento = '';
+          }
+          tipo_tutoria = [req.body.atencion_academica + req.body.socioeconomica + req.body.personal + req.body.apoyo_conocimiento];
+          _context6.next = 10;
+          return connection.query('UPDATE tutoria_grupal SET fecha_inicio = ?, fecha_fin = ?, tipo_tutoria = ?, acciones_implementadas = ?, estatus = ?, profesor = ? WHERE id = ?', [req.body.fecha_inicio, req.body.fecha_fin, tipo_tutoria, req.body.acciones_implementadas, req.body.estatus, req.body.profesor, req.params.id]);
+        case 10:
           results = _context6.sent;
           console.log(results);
           res.sendStatus(200);
-        case 8:
+        case 13:
         case "end":
           return _context6.stop();
       }

@@ -9,6 +9,7 @@ var _express = _interopRequireDefault(require("express"));
 var _morgan = _interopRequireDefault(require("morgan"));
 var _swaggerJsdoc = _interopRequireDefault(require("swagger-jsdoc"));
 var _swaggerUiExpress = _interopRequireDefault(require("swagger-ui-express"));
+var _alumnos = _interopRequireDefault(require("./routes/alumnos"));
 var _asesorias = _interopRequireDefault(require("./routes/asesorias"));
 var _profesores = _interopRequireDefault(require("./routes/profesores"));
 var _tutoriasGrupales = _interopRequireDefault(require("./routes/tutoriasGrupales"));
@@ -36,6 +37,7 @@ app.use(_express["default"].json());
 
 //////////////////////////////// RUTAS DE LA API ///////////////////////////////////////////////
 app.use(_profesores["default"]);
+app.use(_alumnos["default"]);
 app.use(_asesorias["default"]);
 app.use(_tutoriasGrupales["default"]);
 app.use(_tutoriasIndividuales["default"]);

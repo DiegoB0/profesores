@@ -5,6 +5,7 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
 
 //Archivos
+import alumnosRoutes from './routes/alumnos';
 import asesoriasRoutes from './routes/asesorias';
 import profesoresRoutes from './routes/profesores';
 import tutoriasGrupales from './routes/tutoriasGrupales';
@@ -29,6 +30,7 @@ app.use(express.json());
 
 //////////////////////////////// RUTAS DE LA API ///////////////////////////////////////////////
 app.use(profesoresRoutes);
+app.use(alumnosRoutes);
 app.use(asesoriasRoutes);
 app.use(tutoriasGrupales);
 app.use(tutoriasIndividuales);

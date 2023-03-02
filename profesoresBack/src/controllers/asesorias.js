@@ -2,9 +2,14 @@ import { connect } from '../database';
 
 export const getAsesorias = async (req, res) => {
 	const connection = await connect();
-	const [rows] = await connection.query('SELECT * FROM asesorias');
+	const [rows] = await connection.query(
+		'SELECT alumnos.nombre as nombre_alumno, alumnos.aPaterno as apellido_alumno, alumnos.matricula, profesores.nombres as nombre_profesor, profesores.apellidos as apellido_profesor, asesorias.tema, asesorias.observaciones, asesorias.fecha_inicio, asesorias.fecha_fin, asesorias.id FROM asesorias JOIN profesores ON asesorias.profesor = profesores.clave JOIN alumnos ON asesorias.alumno = alumnos.matricula'
+	);
 	console.log(rows);
-	res.json(rows);
+	res.json({
+		status: 200,
+		data: rows,
+	});
 };
 
 export const getAsesoria = async (req, res) => {
@@ -14,7 +19,7 @@ export const getAsesoria = async (req, res) => {
 		[req.params.id]
 	);
 	console.log(rows);
-	res.sendStatus(200);
+	res.json(rows[0]);
 };
 
 export const getAsesoriasCount = async (req, res) => {
@@ -28,14 +33,14 @@ export const getAsesoriasCount = async (req, res) => {
 export const saveAsesoria = async (req, res) => {
 	const connection = await connect();
 	const [results] = await connection.query(
-		'INSERT INTO asesorias(nombre_alumno, tema, observaciones, fecha_inicio, fecha_fin, profesor) VALUES (?, ?, ?, ?, ?, ?)',
+		'INSERT INTO asesorias(tema, observaciones, fecha_inicio, fecha_fin, profesor, alumno) VALUES (?, ?, ?, ?, ?, ?)',
 		[
-			req.body.nombre_alumno,
 			req.body.tema,
 			req.body.observaciones,
 			req.body.fecha_inicio,
 			req.body.fecha_fin,
 			req.body.profesor,
+			req.body.alumno,
 		]
 	);
 	res.sendStatus(200);

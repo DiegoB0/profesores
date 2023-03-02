@@ -1,9 +1,12 @@
 import { connect } from '../database';
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const myPlainTextPassword = 's0//P4$$w0rD';
 
 export const getProfesores = async (req, res) => {
 	const connection = await connect();
 	const [rows] = await connection.query('SELECT * FROM profesores');
-	console.log(rows);
+	console.log(rows[0]);
 	res.json({
 		status: 200,
 		data: rows,
@@ -31,7 +34,7 @@ export const getProfesoresCount = async (req, res) => {
 export const saveProfesor = async (req, res) => {
 	const connection = await connect();
 	const [results] = await connection.query(
-		'INSERT INTO profesores(clave, nombres, apellidos, fnacimiento, email, sexo, estadocivil, tcasa, curp, tcelular, calle, colonia, cp, municipio, estado, estatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )',
+		'INSERT INTO profesores(clave, nombres, apellidos, fnacimiento, email, sexo, estadocivil, tcasa, curp, tcelular, calle, colonia, cp, municipio, estado, estatus, password, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "No hay")',
 		[
 			req.body.clave,
 			req.body.nombres,
@@ -49,6 +52,7 @@ export const saveProfesor = async (req, res) => {
 			req.body.municipio,
 			req.body.estado,
 			req.body.estatus,
+			req.body.password,
 		]
 	);
 

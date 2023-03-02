@@ -1,10 +1,41 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import { useApp } from '../context/AppContext';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2';
+import { useProfesores } from '../../context/ProfesoresContext';
 
 function ProfesoresPage() {
-	const { profesores, loadProfesores, deleteProfesor } = useApp();
+	const { profesores, loadProfesores, deleteProfesor } = useProfesores();
+	const notifyProfesorEliminado = () =>
+		toast.success('Profesor eliminado con exito!', {
+			position: 'top-right',
+			autoClose: 3000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: 'light',
+		});
+
+	function confirmDeleteDialog(clave) {
+		Swal.fire({
+			title: 'Advertencia',
+			text: '¿Esta seguro que desea eliminar al profesor?',
+			icon: 'warning',
+			showDenyButton: true,
+			denyButtonText: 'No',
+			confirmButtonText: 'Sí',
+			confirmButtonColor: '#9333EA',
+			denyButtonColor: '#e04343',
+		}).then((response) => {
+			if (response.isConfirmed) {
+				deleteProfesor(clave);
+				notifyProfesorEliminado();
+			}
+		});
+	}
 
 	const navigate = useNavigate();
 
@@ -41,7 +72,7 @@ function ProfesoresPage() {
 				<td className="px-6 py-4 text-gray-500">{profesores.tcelular}</td>
 				<td className="px-6 py-4 text-gray-600">
 					<button
-						onClick={() => deleteProfesor(profesores.clave)}
+						onClick={() => confirmDeleteDialog(profesores.clave)}
 						className="mr-4"
 					>
 						<ion-icon name="trash-outline"></ion-icon>
@@ -65,7 +96,7 @@ function ProfesoresPage() {
 			<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
 				<div className="pb-4  bg-white rounded-lg">
 					<label htmlFor="table-search" className="sr-only">
-						Search
+						Buscar
 					</label>
 					<div className="relative mt-1 rounded-lg">
 						<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none rounded-lg">
@@ -86,8 +117,8 @@ function ProfesoresPage() {
 						<input
 							type="text"
 							id="table-search"
-							className="block p-2 pl-10 text-sm text-gray-700 border rounded-lg w-80  focus:ring-blue-500 focus:border-blue-500 bg-gray-200 border-gray-600 placeholder-gray-600  dark:focus:ring-blue-500 dark:focus:border-blue-500"
-							placeholder="Search for items"
+							className="block p-2 pl-10 text-sm text-gray-700 border rounded-lg w-80 bg-gray-200  placeholder-gray-600 border-gray-200 focus:outline-none focus:bg-white focus:border-gray-500"
+							placeholder="Buscar profesores..."
 						/>
 					</div>
 
@@ -129,7 +160,7 @@ function ProfesoresPage() {
 								Telefono Celular
 							</th>
 							<th scope="col" className="px-6 py-3">
-								Accion
+								Acción
 							</th>
 						</tr>
 					</thead>
@@ -138,6 +169,7 @@ function ProfesoresPage() {
 						{renderMain()}
 					</tbody>
 				</table>
+				<ToastContainer />
 			</div>
 		</div>
 	);

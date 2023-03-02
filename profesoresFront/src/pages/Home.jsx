@@ -113,7 +113,7 @@ const Home = () => {
 							></path>
 						</svg>
 					</span>
-					<span className="relative">Ir a asesorias</span>
+					<span className="relative">Ir a asesorías</span>
 				</button>
 			</div>
 
@@ -139,7 +139,7 @@ const Home = () => {
 							></path>
 						</svg>
 					</span>
-					<span className="relative">Ir a tutorias</span>
+					<span className="relative">Ir a tutorías</span>
 				</button>
 			</div>
 		</>

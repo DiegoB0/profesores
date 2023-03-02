@@ -15,6 +15,9 @@ function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefine
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+var bcrypt = require('bcrypt');
+var saltRounds = 10;
+var myPlainTextPassword = 's0//P4$$w0rD';
 var getProfesores = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(req, res) {
     var connection, _yield$connection$que, _yield$connection$que2, rows;
@@ -31,7 +34,7 @@ var getProfesores = /*#__PURE__*/function () {
           _yield$connection$que = _context.sent;
           _yield$connection$que2 = _slicedToArray(_yield$connection$que, 1);
           rows = _yield$connection$que2[0];
-          console.log(rows);
+          console.log(rows[0]);
           res.json({
             status: 200,
             data: rows
@@ -116,7 +119,7 @@ var saveProfesor = /*#__PURE__*/function () {
         case 2:
           connection = _context4.sent;
           _context4.next = 5;
-          return connection.query('INSERT INTO profesores(clave, nombres, apellidos, fnacimiento, email, sexo, estadocivil, tcasa, curp, tcelular, calle, colonia, cp, municipio, estado, estatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )', [req.body.clave, req.body.nombres, req.body.apellidos, req.body.fnacimiento, req.body.email, req.body.sexo, req.body.estadocivil, req.body.tcasa, req.body.curp, req.body.tcelular, req.body.calle, req.body.colonia, req.body.cp, req.body.municipio, req.body.estado, req.body.estatus]);
+          return connection.query('INSERT INTO profesores(clave, nombres, apellidos, fnacimiento, email, sexo, estadocivil, tcasa, curp, tcelular, calle, colonia, cp, municipio, estado, estatus, password, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "No hay")', [req.body.clave, req.body.nombres, req.body.apellidos, req.body.fnacimiento, req.body.email, req.body.sexo, req.body.estadocivil, req.body.tcasa, req.body.curp, req.body.tcelular, req.body.calle, req.body.colonia, req.body.cp, req.body.municipio, req.body.estado, req.body.estatus, req.body.password]);
         case 5:
           _yield$connection$que7 = _context4.sent;
           _yield$connection$que8 = _slicedToArray(_yield$connection$que7, 1);

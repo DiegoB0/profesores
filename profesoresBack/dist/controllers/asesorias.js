@@ -26,13 +26,16 @@ var getAsesorias = /*#__PURE__*/function () {
         case 2:
           connection = _context.sent;
           _context.next = 5;
-          return connection.query('SELECT * FROM asesorias');
+          return connection.query('SELECT alumnos.nombre as nombre_alumno, alumnos.aPaterno as apellido_alumno, alumnos.matricula, profesores.nombres as nombre_profesor, profesores.apellidos as apellido_profesor, asesorias.tema, asesorias.observaciones, asesorias.fecha_inicio, asesorias.fecha_fin, asesorias.id FROM asesorias JOIN profesores ON asesorias.profesor = profesores.clave JOIN alumnos ON asesorias.alumno = alumnos.matricula');
         case 5:
           _yield$connection$que = _context.sent;
           _yield$connection$que2 = _slicedToArray(_yield$connection$que, 1);
           rows = _yield$connection$que2[0];
           console.log(rows);
-          res.json(rows);
+          res.json({
+            status: 200,
+            data: rows
+          });
         case 10:
         case "end":
           return _context.stop();
@@ -61,7 +64,7 @@ var getAsesoria = /*#__PURE__*/function () {
           _yield$connection$que4 = _slicedToArray(_yield$connection$que3, 1);
           rows = _yield$connection$que4[0];
           console.log(rows);
-          res.sendStatus(200);
+          res.json(rows[0]);
         case 10:
         case "end":
           return _context2.stop();
@@ -113,7 +116,7 @@ var saveAsesoria = /*#__PURE__*/function () {
         case 2:
           connection = _context4.sent;
           _context4.next = 5;
-          return connection.query('INSERT INTO asesorias(nombre_alumno, tema, observaciones, fecha_inicio, fecha_fin, profesor) VALUES (?, ?, ?, ?, ?, ?)', [req.body.nombre_alumno, req.body.tema, req.body.observaciones, req.body.fecha_inicio, req.body.fecha_fin, req.body.profesor]);
+          return connection.query('INSERT INTO asesorias(tema, observaciones, fecha_inicio, fecha_fin, profesor, alumno) VALUES (?, ?, ?, ?, ?, ?)', [req.body.tema, req.body.observaciones, req.body.fecha_inicio, req.body.fecha_fin, req.body.profesor, req.body.alumno]);
         case 5:
           _yield$connection$que7 = _context4.sent;
           _yield$connection$que8 = _slicedToArray(_yield$connection$que7, 1);
