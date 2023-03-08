@@ -7,6 +7,7 @@ import {
 	saveTutoria,
 	updateTutoria,
 } from '../controllers/tutoriasGrupales';
+import { verifyToken } from '../middlewares';
 
 const router = Router();
 
@@ -25,7 +26,7 @@ const router = Router();
  *   tags: [Tutorias_Grupales]
  *
  */
-router.get('/tutorias/grupales', getTutorias);
+router.get('/tutorias/grupales', verifyToken, getTutorias);
 
 /**
  * @swagger
@@ -34,7 +35,7 @@ router.get('/tutorias/grupales', getTutorias);
  *   summary: Obtiene el total de las tutorias
  *   tags: [Tutorias_Grupales]
  */
-router.get('/tutorias/grupales/count', getTutoriasCount);
+router.get('/tutorias/grupales/count', verifyToken, getTutoriasCount);
 
 /**
  * @swagger
@@ -43,7 +44,7 @@ router.get('/tutorias/grupales/count', getTutoriasCount);
  *   summary: Obtiene una tutoria
  *   tags: [Tutorias_Grupales]
  */
-router.get('/tutorias/grupales/:id', getTutoria);
+router.get('/tutorias/grupales/:id', verifyToken, getTutoria);
 
 /**
  * @swagger
@@ -52,7 +53,7 @@ router.get('/tutorias/grupales/:id', getTutoria);
  *   summary: Agrega una nueva tutoria
  *   tags: [Tutorias_Grupales]
  */
-router.post('/tutorias/grupales', saveTutoria);
+router.post('/tutorias/grupales', verifyToken, saveTutoria);
 
 /**
  * @swagger
@@ -61,7 +62,7 @@ router.post('/tutorias/grupales', saveTutoria);
  *   summary: Elimina una tutoria
  *   tags: [Tutorias_Grupales]
  */
-router.delete('/tutorias/grupales/:id', deleteTutoria);
+router.delete('/tutorias/grupales/:id', verifyToken, deleteTutoria);
 
 /**
  * @swagger
@@ -70,6 +71,6 @@ router.delete('/tutorias/grupales/:id', deleteTutoria);
  *   summary: Actualiza una tutoria
  *   tags: [Tutorias_Grupales]
  */
-router.put('/tutorias/grupales/:id', updateTutoria);
+router.put('/tutorias/grupales/:id', verifyToken, updateTutoria);
 
 export default router;

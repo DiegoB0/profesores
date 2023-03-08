@@ -6,6 +6,7 @@ import {
 	getProfesorRequest,
 	updateProfesorRequest,
 } from '../api/api.profesores';
+import { useUsers } from '../context/UsersContext';
 
 export const ProfesoresContext = createContext();
 
@@ -19,15 +20,20 @@ export const useProfesores = () => {
 
 export const ProfesoresContextProvider = ({ children }) => {
 	const [profesores, setProfesores] = useState([]);
+	const { users } = useUsers();
+
+	let headers = {
+		'x-access-token': users,
+	};
 
 	async function loadProfesores() {
-		const response = await getProfesoresRequest();
+		const response = await getProfesoresRequest(headers);
 		setProfesores(response.data.data);
 	}
 
 	const deleteProfesor = async (id) => {
 		try {
-			const response = await deleteProfesorRequest(id);
+			const response = await deleteProfesorRequest(id, headers);
 			loadProfesores();
 		} catch (error) {
 			console.error(error);
@@ -36,7 +42,7 @@ export const ProfesoresContextProvider = ({ children }) => {
 
 	const createProfesor = async (profesor) => {
 		try {
-			const response = await createProfesorRequest(profesor);
+			const response = await createProfesorRequest(profesor, headers);
 			console.log(response);
 		} catch (err) {
 			console.log(err);
@@ -45,7 +51,7 @@ export const ProfesoresContextProvider = ({ children }) => {
 
 	const getProfesor = async (id) => {
 		try {
-			const response = await getProfesorRequest(id);
+			const response = await getProfesorRequest(id, headers);
 			return response.data;
 		} catch {
 			console.error(error);
@@ -54,7 +60,7 @@ export const ProfesoresContextProvider = ({ children }) => {
 
 	const updateProfesor = async (id, newFields) => {
 		try {
-			const response = await updateProfesorRequest(id, newFields);
+			const response = await updateProfesorRequest(id, newFields, headers);
 			console.log(response);
 		} catch (error) {
 			console.error(error);

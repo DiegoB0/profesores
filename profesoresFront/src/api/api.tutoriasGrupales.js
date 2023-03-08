@@ -1,16 +1,26 @@
 import axios from 'axios';
 
-export const getTutoriasGrupalesRequest = async () =>
-	await axios.get('http://localhost:5000/tutorias/grupales');
+export const getTutoriasGrupalesRequest = async (headers) =>
+	await axios.get('http://localhost:5000/tutorias/grupales', {
+		headers: headers,
+	});
 
-export const createTutoriaGrupalRequest = async (prof) =>
-	await axios.post('http://localhost:5000/tutorias/grupales', prof);
+export const createTutoriaGrupalRequest = async (prof, headers) =>
+	await axios.post('http://localhost:5000/tutorias/grupales', prof, {
+		headers: headers,
+	});
 
-export const deleteTutoriaGrupalRequest = async (id) =>
-	await axios.delete(`http://localhost:5000/tutorias/grupales/${id}`);
+export const deleteTutoriaGrupalRequest = async (id, headers) =>
+	await axios.delete(`http://localhost:5000/tutorias/grupales/${id}`, {
+		headers: headers,
+	});
 
-export const getTutoriaGrupalRequest = async (id) =>
-	await axios.get(`http://localhost:5000/tutorias/grupales/${id}`);
+export const getTutoriaGrupalRequest = async (id, headers) =>
+	await axios.get(`http://localhost:5000/tutorias/grupales/${id}`, {
+		headers: headers,
+	});
 
-export const updateTutoriaGrupalRequest = async (id, newFields) =>
-	await axios.put(`http://localhost:5000/tutorias/grupales/${id}`, newFields);
+export const updateTutoriaGrupalRequest = async (id, newFields, headers) =>
+	await axios.put(`http://localhost:5000/tutorias/grupales/${id}`, newFields, {
+		headers: headers,
+	});

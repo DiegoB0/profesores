@@ -1,10 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
+	const navigate = useNavigate();
 	return (
 		<div className="bg-gray-200 text-gray-600 p-10">
-			<h1>Inicio</h1>
+			<button
+				onClick={() => navigate('/home')}
+				className="uppercase font-extrabold text-lg text-gray-600 hover:text-gray-500"
+			>
+				Inicio
+			</button>
 		</div>
 	);
 }

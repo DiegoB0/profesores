@@ -1,19 +1,30 @@
 import axios from 'axios';
 
-export const getTutoriasIndividualesRequest = async () =>
-	await axios.get('http://localhost:5000/tutorias/individuales');
+export const getTutoriasIndividualesRequest = async (headers) =>
+	await axios.get('http://localhost:5000/tutorias/individuales', {
+		headers: headers,
+	});
 
-export const createTutoriaIndividualRequest = async (prof) =>
-	await axios.post('http://localhost:5000/tutorias/individuales', prof);
+export const createTutoriaIndividualRequest = async (prof, headers) =>
+	await axios.post('http://localhost:5000/tutorias/individuales', prof, {
+		headers: headers,
+	});
 
-export const deleteTutoriaIndividualRequest = async (id) =>
-	await axios.delete(`http://localhost:5000/tutorias/individuales/${id}`);
+export const deleteTutoriaIndividualRequest = async (id, headers) =>
+	await axios.delete(`http://localhost:5000/tutorias/individuales/${id}`, {
+		headers: headers,
+	});
 
-export const getTutoriaIndividualRequest = async (id) =>
-	await axios.get(`http://localhost:5000/tutorias/individuales/${id}`);
+export const getTutoriaIndividualRequest = async (id, headers) =>
+	await axios.get(`http://localhost:5000/tutorias/individuales/${id}`, {
+		headers: headers,
+	});
 
-export const updateTutoriaIndividualRequest = async (id, newFields) =>
+export const updateTutoriaIndividualRequest = async (id, newFields, headers) =>
 	await axios.put(
 		`http://localhost:5000/tutorias/individuales/${id}`,
-		newFields
+		newFields,
+		{
+			headers: headers,
+		}
 	);

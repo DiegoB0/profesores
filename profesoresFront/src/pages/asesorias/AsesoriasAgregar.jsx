@@ -3,9 +3,13 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CustomInput from '../../components/CustomInput';
+import CustomSelect from '../../components/CustomSelect';
+import CustomTextarea from '../../components/CustomTextarea';
 import { useAlumnos } from '../../context/AlumnosContext';
 import { useAsesorias } from '../../context/AsesoriasContext';
 import { useProfesores } from '../../context/ProfesoresContext';
+import { asesoriasSchema } from '../../schemas/asesorias';
 
 function AsesoriasAgregar() {
 	const { createAsesoria, getAsesoria, updateAsesoria } = useAsesorias();
@@ -98,6 +102,7 @@ function AsesoriasAgregar() {
 
 			<Formik
 				initialValues={asesoria}
+				validationSchema={asesoriasSchema}
 				enableReinitialize={true}
 				onSubmit={async (values) => {
 					if (params.id) {
@@ -133,16 +138,14 @@ function AsesoriasAgregar() {
 									Alumno
 								</label>
 								<div className="relative">
-									<select
-										className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+									<CustomSelect
 										name="alumno"
 										onChange={handleChange}
 										value={values.alumno}
-										required
 									>
-										<option>Elige el alumno</option>
+										<option value="">Elige el alumno</option>
 										{renderAlumnos()}
-									</select>
+									</CustomSelect>
 									<div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
 										<svg
 											className="fill-current h-4 w-4"
@@ -158,77 +161,53 @@ function AsesoriasAgregar() {
 
 						<div className="flex flex-wrap -mx-3 mb-6">
 							<div className="w-full px-3">
-								<label
-									htmlFor="message"
-									className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-								>
-									Tema
-								</label>
-
-								<textarea
+								<CustomTextarea
+									label="Tema"
 									id="message"
 									rows="6"
-									className="block p-2.5 w-full  bg-gray-50 rounded-lg border  dark:bg-gray-200  dark:placeholder-gray-400 dark:text-gray-700  resize-none text-base focus:outline-none focus:bg-white focus:border-gray-500"
 									placeholder="Escribe el tema..."
 									name="tema"
 									onChange={handleChange}
 									value={values.tema}
-									required
-								></textarea>
+								></CustomTextarea>
 							</div>
 						</div>
 
 						<div className="flex flex-wrap -mx-3 mb-6 mt-6">
 							<div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-									Fecha Inicio
-								</label>
-								<input
-									className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+								<CustomInput
+									label="Fecha Inicio"
 									type="date"
 									placeholder="Selecciona la fecha de nacimiento"
 									name="fecha_inicio"
 									onChange={handleChange}
 									value={values.fecha_inicio}
-									required
 								/>
 							</div>
 
 							<div className="w-full md:w-1/2 px-3">
-								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-									Fecha Fin
-								</label>
-								<input
-									className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+								<CustomInput
+									label="Fecha Fin"
 									type="date"
 									placeholder="Selecciona la fecha de nacimiento"
 									name="fecha_fin"
 									onChange={handleChange}
 									value={values.fecha_fin}
-									required
 								/>
 							</div>
 						</div>
 
 						<div className="flex flex-wrap -mx-3 mb-6">
 							<div className="w-full px-3">
-								<label
-									htmlFor="message"
-									className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-								>
-									Observaciones
-								</label>
-
-								<textarea
+								<CustomTextarea
+									label="Observaciones"
 									id="message"
 									rows="6"
-									className="block p-2.5 w-full  bg-gray-50 rounded-lg border  dark:bg-gray-200  dark:placeholder-gray-400 dark:text-gray-700  resize-none text-base focus:outline-none focus:bg-white focus:border-gray-500"
 									placeholder="Escribe el tema..."
 									name="observaciones"
 									onChange={handleChange}
 									value={values.observaciones}
-									required
-								></textarea>
+								></CustomTextarea>
 							</div>
 						</div>
 
@@ -241,16 +220,14 @@ function AsesoriasAgregar() {
 									Tutor
 								</label>
 								<div className="relative">
-									<select
-										className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+									<CustomSelect
 										name="profesor"
 										onChange={handleChange}
 										value={values.profesor}
-										required
 									>
 										<option>Elige el profesor</option>
 										{renderProfesores()}
-									</select>
+									</CustomSelect>
 									<div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
 										<svg
 											className="fill-current h-4 w-4"

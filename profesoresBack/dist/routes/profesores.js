@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _express = require("express");
 var _profesores = require("../controllers/profesores");
+var _middlewares = require("../middlewares");
 var router = (0, _express.Router)();
 
 /**
@@ -23,7 +24,7 @@ var router = (0, _express.Router)();
  *   tags: [Profesores]
  *
  */
-router.get('/profesores', _profesores.getProfesores);
+router.get('/profesores', _middlewares.verifyToken, _profesores.getProfesores);
 
 /**
  * @swagger
@@ -32,7 +33,7 @@ router.get('/profesores', _profesores.getProfesores);
  *   summary: Obtiene el total de los profesores
  *   tags: [Profesores]
  */
-router.get('/profesores/count', _profesores.getProfesoresCount);
+router.get('/profesores/count', _middlewares.verifyToken, _profesores.getProfesoresCount);
 
 /**
  * @swagger
@@ -41,7 +42,7 @@ router.get('/profesores/count', _profesores.getProfesoresCount);
  *   summary: Obtiene un profesor
  *   tags: [Profesores]
  */
-router.get('/profesores/:id', _profesores.getProfesor);
+router.get('/profesores/:id', _middlewares.verifyToken, _profesores.getProfesor);
 
 /**
  * @swagger
@@ -50,7 +51,16 @@ router.get('/profesores/:id', _profesores.getProfesor);
  *   summary: Agrega un nuevo profesor
  *   tags: [Profesores]
  */
-router.post('/profesores', _profesores.saveProfesor);
+router.post('/profesores', _middlewares.verifyToken, _profesores.saveProfesor);
+
+/**
+ * @swagger
+ * /profesores/login:
+ *  post:
+ *   summary: Autentica al usuario
+ *   tags: [Profesores]
+ */
+router.post('/profesores/login', _profesores.authProfesores);
 
 /**
  * @swagger
@@ -59,7 +69,7 @@ router.post('/profesores', _profesores.saveProfesor);
  *   summary: Elimina un profesor
  *   tags: [Profesores]
  */
-router["delete"]('/profesores/:id', _profesores.deleteProfesor);
+router["delete"]('/profesores/:id', _middlewares.verifyToken, _profesores.deleteProfesor);
 
 /**
  * @swagger
@@ -68,6 +78,6 @@ router["delete"]('/profesores/:id', _profesores.deleteProfesor);
  *   summary: Actualiza un profesor
  *   tags: [Profesores]
  */
-router.put('/profesores/:id', _profesores.updateProfesor);
+router.put('/profesores/:id', _middlewares.verifyToken, _profesores.updateProfesor);
 var _default = router;
 exports["default"] = _default;

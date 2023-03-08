@@ -6,6 +6,7 @@ import {
 	getAsesoriasRequest,
 	updateAsesoriaRequest,
 } from '../api/api.asesorias';
+import { useUsers } from '../context/UsersContext';
 
 export const AsesoriasContext = createContext();
 
@@ -19,16 +20,21 @@ export const useAsesorias = () => {
 
 export const AsesoriasContextProvider = ({ children }) => {
 	const [asesorias, setAsesorias] = useState([]);
+	const { users } = useUsers();
+
+	let headers = {
+		'x-access-token': users,
+	};
 
 	async function loadAsesorias() {
-		const response = await getAsesoriasRequest();
+		const response = await getAsesoriasRequest(headers);
 		console.log(response.data.data);
 		setAsesorias(response.data.data);
 	}
 
 	const deleteAsesoria = async (id) => {
 		try {
-			const response = await deleteAsesoriaRequest(id);
+			const response = await deleteAsesoriaRequest(id, headers);
 			loadAsesorias();
 		} catch (error) {
 			console.error(error);
@@ -37,7 +43,7 @@ export const AsesoriasContextProvider = ({ children }) => {
 
 	const createAsesoria = async (asesoria) => {
 		try {
-			const response = await createAsesoriaRequest(asesoria);
+			const response = await createAsesoriaRequest(asesoria, headers);
 			console.log(response);
 		} catch (err) {
 			console.log(err);
@@ -46,7 +52,7 @@ export const AsesoriasContextProvider = ({ children }) => {
 
 	const getAsesoria = async (id) => {
 		try {
-			const response = await getAsesoriaRequest(id);
+			const response = await getAsesoriaRequest(id, headers);
 			return response.data;
 		} catch {
 			console.error(error);
@@ -55,7 +61,7 @@ export const AsesoriasContextProvider = ({ children }) => {
 
 	const updateAsesoria = async (id, newFields) => {
 		try {
-			const response = await updateAsesoriaRequest(id, newFields);
+			const response = await updateAsesoriaRequest(id, newFields, headers);
 			console.log(response);
 		} catch (error) {
 			console.error(error);

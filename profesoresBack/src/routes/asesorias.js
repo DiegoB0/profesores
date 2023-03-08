@@ -7,6 +7,8 @@ import {
 	saveAsesoria,
 	updateAsesoria,
 } from '../controllers/asesorias';
+import { verifyToken } from '../middlewares';
+
 const router = Router();
 
 /**
@@ -24,7 +26,7 @@ const router = Router();
  *   tags: [Asesorias]
  *
  */
-router.get('/asesorias', getAsesorias);
+router.get('/asesorias', verifyToken, getAsesorias);
 
 /**
  * @swagger
@@ -33,7 +35,7 @@ router.get('/asesorias', getAsesorias);
  *   summary: Obtiene el total de asesorias
  *   tags: [Asesorias]
  */
-router.get('/asesorias/count', getAsesoriasCount);
+router.get('/asesorias/count', verifyToken, getAsesoriasCount);
 
 /**
  * @swagger
@@ -42,7 +44,7 @@ router.get('/asesorias/count', getAsesoriasCount);
  *   summary: Obtiene una asesoria
  *   tags: [Asesorias]
  */
-router.get('/asesorias/:id', getAsesoria);
+router.get('/asesorias/:id', verifyToken, getAsesoria);
 
 /**
  * @swagger
@@ -51,7 +53,7 @@ router.get('/asesorias/:id', getAsesoria);
  *   summary: Agrega una nueva asesoria
  *   tags: [Asesorias]
  */
-router.post('/asesorias', saveAsesoria);
+router.post('/asesorias', verifyToken, saveAsesoria);
 
 /**
  * @swagger
@@ -60,7 +62,7 @@ router.post('/asesorias', saveAsesoria);
  *   summary: Elimina una asesoria
  *   tags: [Asesorias]
  */
-router.delete('/asesorias/:id', deleteAsesoria);
+router.delete('/asesorias/:id', verifyToken, deleteAsesoria);
 
 /**
  * @swagger
@@ -69,6 +71,6 @@ router.delete('/asesorias/:id', deleteAsesoria);
  *   summary: Actualiza una asesoria
  *   tags: [Asesorias]
  */
-router.put('/asesorias/:id', updateAsesoria);
+router.put('/asesorias/:id', verifyToken, updateAsesoria);
 
 export default router;

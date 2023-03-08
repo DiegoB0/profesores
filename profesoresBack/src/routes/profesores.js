@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import {
+	authProfesores,
 	deleteProfesor,
 	getProfesor,
 	getProfesores,
@@ -7,6 +8,8 @@ import {
 	saveProfesor,
 	updateProfesor,
 } from '../controllers/profesores';
+
+import { verifyToken } from '../middlewares';
 
 const router = Router();
 
@@ -25,7 +28,7 @@ const router = Router();
  *   tags: [Profesores]
  *
  */
-router.get('/profesores', getProfesores);
+router.get('/profesores', verifyToken, getProfesores);
 
 /**
  * @swagger
@@ -34,7 +37,7 @@ router.get('/profesores', getProfesores);
  *   summary: Obtiene el total de los profesores
  *   tags: [Profesores]
  */
-router.get('/profesores/count', getProfesoresCount);
+router.get('/profesores/count', verifyToken, getProfesoresCount);
 
 /**
  * @swagger
@@ -43,7 +46,7 @@ router.get('/profesores/count', getProfesoresCount);
  *   summary: Obtiene un profesor
  *   tags: [Profesores]
  */
-router.get('/profesores/:id', getProfesor);
+router.get('/profesores/:id', verifyToken, getProfesor);
 
 /**
  * @swagger
@@ -52,7 +55,16 @@ router.get('/profesores/:id', getProfesor);
  *   summary: Agrega un nuevo profesor
  *   tags: [Profesores]
  */
-router.post('/profesores', saveProfesor);
+router.post('/profesores', verifyToken, saveProfesor);
+
+/**
+ * @swagger
+ * /profesores/login:
+ *  post:
+ *   summary: Autentica al usuario
+ *   tags: [Profesores]
+ */
+router.post('/profesores/login', authProfesores);
 
 /**
  * @swagger
@@ -61,7 +73,7 @@ router.post('/profesores', saveProfesor);
  *   summary: Elimina un profesor
  *   tags: [Profesores]
  */
-router.delete('/profesores/:id', deleteProfesor);
+router.delete('/profesores/:id', verifyToken, deleteProfesor);
 
 /**
  * @swagger
@@ -70,6 +82,6 @@ router.delete('/profesores/:id', deleteProfesor);
  *   summary: Actualiza un profesor
  *   tags: [Profesores]
  */
-router.put('/profesores/:id', updateProfesor);
+router.put('/profesores/:id', verifyToken, updateProfesor);
 
 export default router;

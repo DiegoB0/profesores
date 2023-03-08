@@ -13,7 +13,7 @@ POST {{api}}
 Content-Type: application/json
 
 {
-    "clave": 2,
+    "clave": 1,
     "nombres": "Diego",
     "apellidos": "Elizalde",
     "fnacimiento": "2023-02-14",
@@ -28,11 +28,22 @@ Content-Type: application/json
     "cp": 34166,
     "municipio": "durango",
     "estado": "durango",
+    "password": "1234",
     "estatus": "inactivo"
 }
 
 ###
-DELETE {{api}}/2
+POST {{api}}/login
+Content-Type: application/json
+
+{
+    "clave": 2,
+    "password": "1234"
+}
+
+###
+DELETE {{api}}/1400
+
 
 ###
 PUT {{api}}/2

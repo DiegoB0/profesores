@@ -7,6 +7,7 @@ import {
 	saveTutoria,
 	updateTutoria,
 } from '../controllers/tutoriasIndividuales';
+import { verifyToken } from '../middlewares';
 
 const router = Router();
 
@@ -25,7 +26,7 @@ const router = Router();
  *   tags: [Tutorias_Individuales]
  *
  */
-router.get('/tutorias/individuales', getTutorias);
+router.get('/tutorias/individuales', verifyToken, getTutorias);
 
 /**
  * @swagger
@@ -34,7 +35,7 @@ router.get('/tutorias/individuales', getTutorias);
  *   summary: Obtiene el total de las tutorias
  *   tags: [Tutorias_Individuales]
  */
-router.get('/tutorias/individuales/count', getTutoriasCount);
+router.get('/tutorias/individuales/count', verifyToken, getTutoriasCount);
 
 /**
  * @swagger
@@ -43,7 +44,7 @@ router.get('/tutorias/individuales/count', getTutoriasCount);
  *   summary: Obtiene una tutoria
  *   tags: [Tutorias_Individuales]
  */
-router.get('/tutorias/individuales/:id', getTutoria);
+router.get('/tutorias/individuales/:id', verifyToken, getTutoria);
 
 /**
  * @swagger
@@ -52,7 +53,7 @@ router.get('/tutorias/individuales/:id', getTutoria);
  *   summary: Agrega una nueva tutoria
  *   tags: [Tutorias_Individuales]
  */
-router.post('/tutorias/individuales', saveTutoria);
+router.post('/tutorias/individuales', verifyToken, saveTutoria);
 
 /**
  * @swagger
@@ -61,7 +62,7 @@ router.post('/tutorias/individuales', saveTutoria);
  *   summary: Elimina una tutoria
  *   tags: [Tutorias_Individuales]
  */
-router.delete('/tutorias/individuales/:id', deleteTutoria);
+router.delete('/tutorias/individuales/:id', verifyToken, deleteTutoria);
 
 /**
  * @swagger
@@ -70,6 +71,6 @@ router.delete('/tutorias/individuales/:id', deleteTutoria);
  *   summary: Actualiza una tutoria
  *   tags: [Tutorias_Individuales]
  */
-router.put('/tutorias/individuales/:id', updateTutoria);
+router.put('/tutorias/individuales/:id', verifyToken, updateTutoria);
 
 export default router;

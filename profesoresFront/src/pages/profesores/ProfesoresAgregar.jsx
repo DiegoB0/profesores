@@ -3,7 +3,10 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CustomInput from '../../components/CustomInput';
+import CustomSelect from '../../components/CustomSelect';
 import { useProfesores } from '../../context/ProfesoresContext';
+import { profesoresSchema } from '../../schemas/profesores';
 
 function ProfesoresAgregar() {
 	const { createProfesor, getProfesor, updateProfesor } = useProfesores();
@@ -77,7 +80,7 @@ function ProfesoresAgregar() {
 					municipio: profesor.municipio,
 					estado: profesor.estado,
 					estatus: profesor.estatus,
-					password: profesor.password,
+					password: '',
 				});
 			}
 		};
@@ -92,6 +95,7 @@ function ProfesoresAgregar() {
 
 			<Formik
 				initialValues={profesor}
+				validationSchema={profesoresSchema}
 				enableReinitialize={true}
 				onSubmit={async (values) => {
 					if (params.id) {
@@ -131,83 +135,63 @@ function ProfesoresAgregar() {
 
 						<div className="flex flex-wrap -mx-3 mb-6">
 							<div className="w-full px-3">
-								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-									Clave
-								</label>
-								<input
-									className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+								<CustomInput
+									label="Clave"
 									placeholder="1234"
 									type="text"
 									name="clave"
 									onChange={handleChange}
 									value={values.clave}
-									required
 								/>
 							</div>
 						</div>
 
 						<div className="flex flex-wrap -mx-3 mb-6 mt-6">
 							<div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-									Nombre
-								</label>
-								<input
-									className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4  leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+								<CustomInput
+									label="Nombre"
 									placeholder="Juan"
 									type="text"
 									name="nombres"
 									onChange={handleChange}
 									value={values.nombres}
-									required
 								/>
 							</div>
 
 							<div className="w-full md:w-1/2 px-3">
-								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-									Apellidos
-								</label>
-								<input
-									className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+								<CustomInput
+									label="Apellido"
 									type="text"
 									placeholder="Perez"
 									name="apellidos"
 									onChange={handleChange}
 									value={values.apellidos}
-									required
 								/>
 							</div>
 						</div>
 
 						<div className="flex flex-wrap -mx-3 mb-6">
 							<div className="w-full px-3">
-								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-									Fecha de Nacimiento
-								</label>
-								<input
-									className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+								<CustomInput
+									label="Fecha de Nacimiento"
 									type="date"
 									placeholder="Selecciona la fecha de nacimiento"
 									name="fnacimiento"
 									onChange={handleChange}
 									value={values.fnacimiento}
-									required
 								/>
 							</div>
 						</div>
 
 						<div className="flex flex-wrap -mx-3 mb-6">
 							<div className="w-full px-3">
-								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-									Email
-								</label>
-								<input
-									className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+								<CustomInput
+									label="Email"
 									type="email"
 									placeholder="example@gmail.com"
 									name="email"
 									onChange={handleChange}
 									value={values.email}
-									required
 								/>
 							</div>
 						</div>
@@ -215,21 +199,19 @@ function ProfesoresAgregar() {
 						<div className="flex flex-wrap -mx-3 mb-6 mt-6">
 							<div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-									Sexo
+									Estado Civil
 								</label>
 								<div className="relative">
-									<select
-										className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+									<CustomSelect
 										name="sexo"
 										onChange={handleChange}
 										value={values.sexo}
-										required
 									>
-										<option>Selecciona el sexo</option>
+										<option value="">Selecciona el sexo</option>
 										<option value="Masculino">Masculino</option>
 										<option value="Femenino">Femenino</option>
 										<option value="Otro">Otro</option>
-									</select>
+									</CustomSelect>
 									<div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
 										<svg
 											className="fill-current h-4 w-4"
@@ -247,17 +229,15 @@ function ProfesoresAgregar() {
 									Estado Civil
 								</label>
 								<div className="relative">
-									<select
-										className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+									<CustomSelect
 										name="estadocivil"
 										onChange={handleChange}
 										value={values.estadocivil}
-										required
 									>
-										<option>Selecciona el estado civil</option>
+										<option value="">Selecciona el estado civil</option>
 										<option value="Soltero">Soltero</option>
 										<option value="Casado">Casado</option>
-									</select>
+									</CustomSelect>
 									<div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
 										<svg
 											className="fill-current h-4 w-4"
@@ -273,128 +253,96 @@ function ProfesoresAgregar() {
 
 						<div className="flex flex-wrap -mx-3 mb-6">
 							<div className="w-full px-3">
-								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-									CURP
-								</label>
-								<input
-									className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+								<CustomInput
+									label="CURP"
 									type="text"
 									placeholder="OEAF771012HMCRGR09"
 									name="curp"
 									onChange={handleChange}
 									value={values.curp}
-									required
 								/>
 							</div>
 						</div>
 
 						<div className="flex flex-wrap -mx-3 mb-6 mt-6">
 							<div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-									Telefono de Casa
-								</label>
-								<input
-									className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4  leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+								<CustomInput
+									label="Telefono de Casa"
 									placeholder="(618)3210822"
 									type="text"
 									name="tcasa"
 									onChange={handleChange}
 									value={values.tcasa}
-									required
 								/>
 							</div>
 
 							<div className="w-full md:w-1/2 px-3">
-								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-									Telefono Celular
-								</label>
-								<input
-									className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+								<CustomInput
+									label="Telefono Celular"
 									type="text"
 									placeholder="(618)3210822"
 									name="tcelular"
 									onChange={handleChange}
 									value={values.tcelular}
-									required
 								/>
 							</div>
 						</div>
 
 						<div className="flex flex-wrap -mx-3 mb-6 mt-6">
 							<div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-									Calle
-								</label>
-								<input
-									className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4  leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+								<CustomInput
+									label="Calle"
 									type="text"
 									placeholder="Fuentes"
 									name="calle"
 									onChange={handleChange}
 									value={values.calle}
-									required
 								/>
 							</div>
 
 							<div className="w-full md:w-1/2 px-3">
-								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-									Colonia
-								</label>
-								<input
-									className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+								<CustomInput
+									label="Colonia"
 									type="text"
 									placeholder="Roma"
 									name="colonia"
 									onChange={handleChange}
 									value={values.colonia}
-									required
 								/>
 							</div>
 						</div>
 
 						<div className="flex flex-wrap -mx-3 mb-2">
 							<div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-									Codigo Postal
-								</label>
-								<input
-									className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+								<CustomInput
+									label="Codigo Postal"
 									type="text"
 									placeholder="34166"
 									name="cp"
 									onChange={handleChange}
 									value={values.cp}
-									required
 								/>
 							</div>
 
 							<div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-									Municipio
-								</label>
-								<input
-									className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+								<CustomInput
+									label="Municipio"
 									type="text"
 									placeholder="Durango"
 									name="municipio"
 									onChange={handleChange}
 									value={values.municipio}
-									required
 								/>
 							</div>
 
 							<div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-									Estado
-								</label>
-								<input
-									className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+								<CustomInput
+									label="Estado"
 									type="text"
 									placeholder="Durango"
 									name="estado"
 									onChange={handleChange}
 									value={values.estado}
-									required
 								/>
 							</div>
 						</div>
@@ -405,16 +353,15 @@ function ProfesoresAgregar() {
 									Estatus
 								</label>
 								<div className="relative">
-									<select
-										className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+									<CustomSelect
 										name="estatus"
 										onChange={handleChange}
 										value={values.estatus}
-										required
 									>
+										<option value="">Selecciona el estatus</option>
 										<option value="Inactivo">Inactivo</option>
 										<option value="Activo">Activo</option>
-									</select>
+									</CustomSelect>
 									<div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
 										<svg
 											className="fill-current h-4 w-4"
@@ -430,17 +377,13 @@ function ProfesoresAgregar() {
 
 						<div className="flex flex-wrap -mx-3 mb-6">
 							<div className="w-full px-3">
-								<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-									Password
-								</label>
-								<input
-									className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+								<CustomInput
+									label="Contraseña"
 									placeholder="1234"
 									type="password"
 									name="password"
 									onChange={handleChange}
 									value={values.password}
-									required
 								/>
 							</div>
 						</div>
@@ -449,7 +392,6 @@ function ProfesoresAgregar() {
 						{/** Div del Boton */}
 						<div className="block w-full mt-4">
 							<button
-								onClick={notifyProfesorPosted}
 								type="submit"
 								disabled={isSubmitting}
 								className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 w-full"

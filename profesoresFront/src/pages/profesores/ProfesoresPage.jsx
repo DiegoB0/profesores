@@ -7,6 +7,7 @@ import { useProfesores } from '../../context/ProfesoresContext';
 
 function ProfesoresPage() {
 	const { profesores, loadProfesores, deleteProfesor } = useProfesores();
+
 	const notifyProfesorEliminado = () =>
 		toast.success('Profesor eliminado con exito!', {
 			position: 'top-right',
@@ -70,6 +71,7 @@ function ProfesoresPage() {
 				<td className="px-6 py-4 text-gray-500">{profesores.email}</td>
 				<td className="px-6 py-4 text-gray-500">{profesores.tcasa}</td>
 				<td className="px-6 py-4 text-gray-500">{profesores.tcelular}</td>
+				<td className="px-6 py-4 text-gray-500">{profesores.password}</td>
 				<td className="px-6 py-4 text-gray-600">
 					<button
 						onClick={() => confirmDeleteDialog(profesores.clave)}
@@ -158,6 +160,9 @@ function ProfesoresPage() {
 							</th>
 							<th scope="col" className="px-6 py-3">
 								Telefono Celular
+							</th>
+							<th scope="col" className="px-6 py-3">
+								Contraseña
 							</th>
 							<th scope="col" className="px-6 py-3">
 								Acción

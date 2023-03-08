@@ -1,6 +1,8 @@
 import { config as dotenv } from 'dotenv';
 dotenv();
 
+export const SECRET = 'profesores-api';
+
 export const config = {
 	host: process.env.DB_HOST,
 	user: process.env.DB_USER,

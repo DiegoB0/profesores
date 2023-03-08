@@ -6,6 +6,7 @@ import {
 	getTutoriasGrupalesRequest,
 	updateTutoriaGrupalRequest,
 } from '../api/api.tutoriasGrupales';
+import { useUsers } from '../context/UsersContext';
 
 export const TutoriasGrupalesContext = createContext();
 
@@ -21,16 +22,21 @@ export const useTutoriasGrupales = () => {
 
 export const TutoriasGrupalesContextProvider = ({ children }) => {
 	const [tutoriasGrupales, setTutoriasGrupales] = useState([]);
+	const { users } = useUsers();
+
+	let headers = {
+		'x-access-token': users,
+	};
 
 	async function loadTutoriasGrupales() {
-		const response = await getTutoriasGrupalesRequest();
+		const response = await getTutoriasGrupalesRequest(headers);
 		console.log(response);
 		setTutoriasGrupales(response.data.data);
 	}
 
 	const deleteTutoriaGrupal = async (id) => {
 		try {
-			const response = await deleteTutoriaGrupalRequest(id);
+			const response = await deleteTutoriaGrupalRequest(id, headers);
 			loadTutoriasGrupales();
 		} catch (error) {
 			console.error(error);
@@ -39,7 +45,7 @@ export const TutoriasGrupalesContextProvider = ({ children }) => {
 
 	const createTutoriaGrupal = async (tutoria) => {
 		try {
-			const response = await createTutoriaGrupalRequest(tutoria);
+			const response = await createTutoriaGrupalRequest(tutoria, headers);
 			console.log(response);
 		} catch (err) {
 			console.log(err);
@@ -48,7 +54,7 @@ export const TutoriasGrupalesContextProvider = ({ children }) => {
 
 	const getTutoriaGrupal = async (id) => {
 		try {
-			const response = await getTutoriaGrupalRequest(id);
+			const response = await getTutoriaGrupalRequest(id, headers);
 			return response.data;
 		} catch {
 			console.error(error);
@@ -57,7 +63,7 @@ export const TutoriasGrupalesContextProvider = ({ children }) => {
 
 	const updateTutoriaGrupal = async (id, newFields) => {
 		try {
-			const response = await updateTutoriaGrupalRequest(id, newFields);
+			const response = await updateTutoriaGrupalRequest(id, newFields, headers);
 			console.log(response);
 		} catch (error) {
 			console.error(error);
