@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import { SECRET } from '../config';
 import { connect } from '../database';
 const bcrypt = require('bcrypt');
 const myPlainTextPassword = 's0//P4$$w0rD';
@@ -7,7 +6,7 @@ const myPlainTextPassword = 's0//P4$$w0rD';
 export const getProfesores = async (req, res) => {
 	const connection = await connect();
 	const [rows] = await connection.query('SELECT * FROM profesores');
-	console.log(rows[0]);
+
 	res.json({
 		status: 200,
 		data: rows,
@@ -20,8 +19,12 @@ export const getProfesor = async (req, res) => {
 		'SELECT * FROM profesores WHERE clave = ?',
 		[req.params.id]
 	);
-	console.log(rows[0]);
-	res.json(rows[0]);
+
+	if (rows[0]) {
+		res.json(rows[0]);
+	} else {
+		res.json({ nuevo: 'Clave valida' });
+	}
 };
 
 export const getProfesoresCount = async (req, res) => {
@@ -71,15 +74,12 @@ export const authProfesores = async (req, res) => {
 	);
 
 	if (results.length > 0) {
-		console.log('La clave existe');
-
 		results.forEach((profesor) => {
 			bcrypt.compare(data.password, profesor.password, (err, isMatch) => {
 				if (!isMatch) {
 					res.status(401).json({ token: null, message: 'Contraseña invalida' });
 				} else {
-					console.log('Contraseña correcta');
-					const token = jwt.sign({ id: profesor.clave }, SECRET, {
+					const token = jwt.sign({ id: profesor.clave }, process.env.SECRET, {
 						expiresIn: 86400,
 					});
 
@@ -128,7 +128,7 @@ export const updateProfesor = async (req, res) => {
 			req.params.id,
 		]
 	);
-	console.log(results);
+
 	res.json({
 		status: 200,
 		data: results,

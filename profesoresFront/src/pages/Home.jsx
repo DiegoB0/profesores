@@ -46,10 +46,10 @@ const Home = () => {
 						}}
 						aria-hidden="true"
 					>
-						¡Bienvenido! ¿Que desea hacer?
+						¡Hola de Nuevo! ¿Que desea hacer?
 					</span>{' '}
 					{/* glitch::before */}
-					¡Bienvenido! ¿Que desea hacer?
+					¡Hola de Nuevo! ¿Que desea hacer?
 					<span
 						id="after-te1"
 						className="absolute top-0 -left-0.5 w-full h-full bg-transparent"
@@ -59,7 +59,7 @@ const Home = () => {
 						}}
 						aria-hidden="true"
 					>
-						!Bienvenido! ¿Que desea hacer?
+						!Hola de Nuevo! ¿Que desea hacer?
 					</span>{' '}
 					{/* glitch::after */}
 				</h1>

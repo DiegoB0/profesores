@@ -46,6 +46,15 @@ router.get('/profesores/:id', _middlewares.verifyToken, _profesores.getProfesor)
 
 /**
  * @swagger
+ * /profesores/:id:
+ *  get:
+ *   summary: Obtiene un profesor
+ *   tags: [Profesores]
+ */
+router.get('/profesores/validate/:id', _profesores.getProfesor);
+
+/**
+ * @swagger
  * /profesores:
  *  post:
  *   summary: Agrega un nuevo profesor

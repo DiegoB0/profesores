@@ -62,7 +62,6 @@ function ProfesoresAgregar() {
 		const loadProfesor = async () => {
 			if (params.id) {
 				const profesor = await getProfesor(params.id);
-				console.log(profesor);
 				setProfesor({
 					clave: profesor.clave,
 					nombres: profesor.nombres,
@@ -130,7 +129,10 @@ function ProfesoresAgregar() {
 				}}
 			>
 				{({ handleChange, handleSubmit, values, isSubmitting }) => (
-					<Form onSubmit={handleSubmit} className="w-full max-w-lg mt-10">
+					<Form
+						onSubmit={handleSubmit}
+						className="w-full max-w-lg mt-10 mb-10 bg-white rounded-xl p-10"
+					>
 						{/** Nuevo formulario con tailwind */}
 
 						<div className="flex flex-wrap -mx-3 mb-6">

@@ -3,13 +3,13 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import image from '../assets/login.png';
 import CustomInput from '../components/CustomInput';
 import { useUsers } from '../context/UsersContext';
 import { loginSchema } from '../schemas/login';
 
 const Login = () => {
 	const { users, authUsers, setUsers } = useUsers();
-
 	const navigate = useNavigate();
 
 	const notifyError = () =>
@@ -25,69 +25,86 @@ const Login = () => {
 		});
 
 	return (
-		<div className="flex flex-col items-center justify-center mt-12">
-			<h1 className="text-xl font-extrabold uppercase text-gray-700">Login</h1>
+		<div className="h-full bg-gray-200 px-3 py-16 rounded-xl">
+			<div className="max-w-md mx-auto bg-white p-3 rounded-xl">
+				<div className="px-3 py-5">
+					<div className="text-center">
+						<h1 className="text-2xl mb-4 text-gray-600 uppercase font-extrabold">
+							Iniciar Sesion
+						</h1>
+					</div>
+					<div className="flex justify-center">
+						<img src={image} style={{ height: '150px' }} alt="" />
+					</div>
 
-			<Formik
-				initialValues={{ clave: '', password: '' }}
-				validationSchema={loginSchema}
-				onSubmit={async (values, { resetForm }) => {
-					const response = await authUsers(values);
-					if (response) {
-						navigate('/home');
-						setUsers(response);
-						console.log(users);
-					} else {
-						navigate('/');
-						notifyError();
-					}
-					resetForm({ values: '' });
-				}}
-			>
-				{({ handleChange, handleSubmit, values, isSubmitting }) => (
-					<Form onSubmit={handleSubmit} className="w-full max-w-lg mt-10">
-						{/** Nuevo formulario con tailwind */}
-
-						<div className="flex flex-wrap -mx-3 mb-6">
-							<div className="w-full px-3">
-								<CustomInput
-									label="Clave"
-									type="text"
-									placeholder="Ingrese su clave"
-									name="clave"
-									onChange={handleChange}
-									value={values.clave}
-								/>
-							</div>
+					<div className="mt-5">
+						<hr className="h-0.5 mt-3" />
+						<div className="relative py-4 flex justify-center mt-10">
+							<span className="absolute px-4 rounded -top-4 left-30 bg-white text-gray-500 font-bold">
+								Ingrese sus credenciales
+							</span>
 						</div>
+					</div>
 
-						<div className="flex flex-wrap -mx-3 mb-6">
-							<div className="w-full px-3">
-								<CustomInput
-									label="Contraseña"
-									type="password"
-									placeholder="Ingrese su contraseña"
-									name="password"
-									onChange={handleChange}
-									value={values.password}
-								/>
-							</div>
-						</div>
-						<ToastContainer />
+					<Formik
+						initialValues={{ clave: '', password: '' }}
+						validationSchema={loginSchema}
+						onSubmit={async (values, { resetForm }) => {
+							const response = await authUsers(values);
+							if (response) {
+								navigate('/home');
+								setUsers(response);
+								console.log(users);
+							} else {
+								notifyError();
+							}
+							resetForm({ values: '' });
+						}}
+					>
+						{({ handleChange, handleSubmit, values, isSubmitting }) => (
+							<Form onSubmit={handleSubmit}>
+								<div className="relative mb-3">
+									<CustomInput
+										className="transition duration-500 border h-12 rounded w-full px-2 mb-2"
+										label="clave"
+										type="text"
+										placeholder="12345"
+										name="clave"
+										onChange={handleChange}
+										value={values.clave}
+									/>
+								</div>
 
-						{/** Div del Boton */}
-						<div className="block w-full mt-4">
-							<button
-								type="submit"
-								disabled={isSubmitting}
-								className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 w-full"
-							>
-								{isSubmitting ? 'Iniciando sesion...' : 'Iniciar sesion'}
-							</button>
-						</div>
-					</Form>
-				)}
-			</Formik>
+								<div className="relative mb-1">
+									<CustomInput
+										className=" transition duration-500 border h-12 rounded w-full px-2 mb-2"
+										label="contraseña"
+										type="password"
+										placeholder="******"
+										name="password"
+										onChange={handleChange}
+										value={values.password}
+									/>
+								</div>
+
+								<div className="text-right mb-3">
+									<a className="cursor-pointer text-gray-500 hover:text-gray-600 font-extrabold">
+										¿Olvidó su contraseña?
+									</a>
+								</div>
+								<ToastContainer />
+								<button
+									className="h-12 w-full hover:bg-purple-800 focus:outline-none bg-purple-700 rounded-xl text-white mb-3 mt-10 uppercase font-extrabold"
+									type="submit"
+									disabled={isSubmitting}
+								>
+									{isSubmitting ? 'Enviando...' : 'Enviar'}
+								</button>
+							</Form>
+						)}
+					</Formik>
+				</div>
+			</div>
 		</div>
 	);
 };

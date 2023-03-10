@@ -90,7 +90,7 @@ function ProfesoresPage() {
 	}
 
 	return (
-		<div className="m-8 p-5 rounded-lg bg-white">
+		<div className="m-20 rounded-xl bg-white p-10">
 			<h1 className="flex align-items-center justify-center text-xl font-extrabold uppercase text-gray-700">
 				Profesores
 			</h1>

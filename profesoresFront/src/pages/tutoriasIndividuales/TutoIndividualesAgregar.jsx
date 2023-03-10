@@ -122,7 +122,10 @@ const TutoIndividualesAgregar = () => {
 				}}
 			>
 				{({ handleChange, handleSubmit, values, isSubmitting }) => (
-					<Form onSubmit={handleSubmit} className="w-full max-w-lg mt-10">
+					<Form
+						onSubmit={handleSubmit}
+						className="w-full max-w-lg mt-10 mb-10 rounded-xl bg-white p-10"
+					>
 						{/** Nuevo formulario con tailwind */}
 
 						<div className="flex flex-wrap -mx-3 mb-6">
@@ -233,7 +236,7 @@ const TutoIndividualesAgregar = () => {
 												htmlFor="angular-checkbox-list"
 												className="w-full py-3 ml-2 text-sm font-medium text-gray-700 dark:text-gray-400"
 											>
-												Apoyo en el conocimiento
+												Apoyo area conocimiento
 											</label>
 										</div>
 									</li>

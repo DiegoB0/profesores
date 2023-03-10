@@ -6,7 +6,7 @@ function TutoriasCards() {
 	return (
 		<section className="p-20 h-screen flex md:flex-row justify-center items-center bg-purple-500 flex-wrap sm:flex-col">
 			<div
-				className="h-4/5 w-2/5 relative cursor-pointer mb-20 mr-20"
+				className="h-4/5 w-2/5 relative cursor-pointer mb-20 mr-20 "
 				onClick={() => navigate('/tutorias/grupales')}
 			>
 				<div className="absolute inset-0 bg-white opacity-25 rounded-lg shadow-2xl"></div>

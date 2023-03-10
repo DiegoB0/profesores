@@ -18,6 +18,9 @@ export const getProfesorRequest = async (id, headers) =>
 		headers: headers,
 	});
 
+export const validateProfesorRequest = async (id) =>
+	await axios.get(`http://localhost:5000/profesores/validate/${id}`);
+
 export const updateProfesorRequest = async (id, newFields, headers) =>
 	await axios.put(`http://localhost:5000/profesores/${id}`, newFields, {
 		headers: headers,

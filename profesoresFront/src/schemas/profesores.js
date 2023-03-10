@@ -1,3 +1,4 @@
+import axios from 'axios';
 import * as yup from 'yup';
 
 const curpRules =
@@ -14,7 +15,25 @@ export const profesoresSchema = yup.object().shape({
 		.typeError('Debe ser un numero entero')
 		.positive('Debe ser positivo')
 		.integer()
-		.required('Este campo es requerido'),
+		.required('Este campo es requerido')
+		.test('Clave unica', 'Esta clave ya existe', function (id) {
+			return new Promise((resolve, reject) => {
+				axios
+					.get(`http://localhost:5000/profesores/validate/${id}`)
+					.then((res) => {
+						const nuevo = res.data.nuevo;
+
+						if (nuevo == 'Clave valida') {
+							resolve(true);
+						} else {
+							resolve(false);
+						}
+					})
+					.catch((error) => {
+						console.error(error);
+					});
+			});
+		}),
 	nombres: yup
 		.string()
 		.min(3, 'Debe contener al menos tres caracteres')

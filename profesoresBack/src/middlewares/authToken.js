@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import { SECRET } from '../config';
 import { connect } from '../database';
 
 export const verifyToken = async (req, res, next) => {
@@ -10,7 +9,7 @@ export const verifyToken = async (req, res, next) => {
 			return res.status(403).json({ message: 'No se envio ningun token' });
 		}
 
-		const decoded = jwt.verify(token, SECRET);
+		const decoded = jwt.verify(token, process.env.SECRET);
 
 		const id = decoded.id;
 

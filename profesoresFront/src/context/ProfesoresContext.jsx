@@ -58,6 +58,15 @@ export const ProfesoresContextProvider = ({ children }) => {
 		}
 	};
 
+	const validateProfesor = async (id) => {
+		try {
+			const response = await getProfesorRequest(id, headers);
+			return response.data;
+		} catch {
+			console.error(error);
+		}
+	};
+
 	const updateProfesor = async (id, newFields) => {
 		try {
 			const response = await updateProfesorRequest(id, newFields, headers);
@@ -76,6 +85,7 @@ export const ProfesoresContextProvider = ({ children }) => {
 				createProfesor,
 				getProfesor,
 				updateProfesor,
+				validateProfesor,
 			}}
 		>
 			{children}

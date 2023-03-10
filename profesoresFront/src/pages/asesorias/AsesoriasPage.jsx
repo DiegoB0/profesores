@@ -88,7 +88,7 @@ function AsesoriasPage() {
 	}
 
 	return (
-		<div className="m-8 p-5 rounded-lg bg-white">
+		<div className="m-20 p-10 rounded-xl bg-white">
 			<h1 className="flex align-items-center justify-center text-xl font-extrabold uppercase text-gray-700">
 				Asesorías
 			</h1>

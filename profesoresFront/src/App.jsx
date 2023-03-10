@@ -10,6 +10,7 @@ import { UsersContextProvider } from './context/UsersContext';
 import AsesoriasAgregar from './pages/asesorias/AsesoriasAgregar';
 import AsesoriasPage from './pages/asesorias/AsesoriasPage';
 import Home from './pages/Home';
+import Inicio from './pages/Inicio';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import ProfesoresAgregar from './pages/profesores/ProfesoresAgregar';
@@ -30,7 +31,8 @@ function App() {
 							<AsesoriasContextProvider>
 								<Navbar></Navbar>
 								<Routes>
-									<Route path="/" element={<Login />}></Route>
+									<Route path="/" element={<Inicio />}></Route>
+									<Route path="/login" element={<Login />}></Route>
 									<Route element={<ProtectedRoute />}>
 										<Route path="/home" element={<Home></Home>}></Route>
 										<Route
