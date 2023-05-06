@@ -6,7 +6,7 @@ import {
 	getAsesoriasRequest,
 	updateAsesoriaRequest,
 } from '../api/api.asesorias';
-import { useUsers } from '../context/UsersContext';
+import { useUsers } from './UsersContext';
 
 export const AsesoriasContext = createContext();
 

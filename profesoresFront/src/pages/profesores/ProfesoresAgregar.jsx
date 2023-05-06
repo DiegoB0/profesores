@@ -1,7 +1,7 @@
 import { Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CustomInput from '../../components/CustomInput';
 import CustomSelect from '../../components/CustomSelect';
@@ -389,8 +389,6 @@ function ProfesoresAgregar() {
 								/>
 							</div>
 						</div>
-						<ToastContainer />
-
 						{/** Div del Boton */}
 						<div className="block w-full mt-4">
 							<button

@@ -64,7 +64,6 @@ const Home = () => {
 					{/* glitch::after */}
 				</h1>
 			</div>
-
 			<div className="flex justify-center items-center mt-20">
 				<button
 					className="relative inline-flex items-center px-12 py-3 overflow-hidden text-lg font-medium text-purple-600 border-2 border-purple-600 rounded-full hover:text-white group hover:bg-gray-50"

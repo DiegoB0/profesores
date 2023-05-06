@@ -4,7 +4,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateProfesor = exports.saveProfesor = exports.getProfesoresCount = exports.getProfesores = exports.getProfesor = exports.deleteProfesor = exports.authProfesores = void 0;
+exports.updateProfesor = exports.saveProfesor = exports.getProfesoresCount = exports.getProfesores = exports.getProfesor = exports.editProfile = exports.deleteProfesor = exports.authProfesores = void 0;
+var _bcrypt = _interopRequireDefault(require("bcrypt"));
 var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 var _database = require("../database");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -17,8 +18,6 @@ function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefine
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-var bcrypt = require('bcrypt');
-var myPlainTextPassword = 's0//P4$$w0rD';
 var getProfesores = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(req, res) {
     var connection, _yield$connection$que, _yield$connection$que2, rows;
@@ -121,11 +120,11 @@ var saveProfesor = /*#__PURE__*/function () {
         case 0:
           clave = req.body.clave;
           _context4.next = 3;
-          return bcrypt.genSalt(10);
+          return _bcrypt["default"].genSalt(10);
         case 3:
           salt = _context4.sent;
           _context4.next = 6;
-          return bcrypt.hash(req.body.password, salt);
+          return _bcrypt["default"].hash(req.body.password, salt);
         case 6:
           password = _context4.sent;
           _context4.next = 9;
@@ -133,7 +132,7 @@ var saveProfesor = /*#__PURE__*/function () {
         case 9:
           connection = _context4.sent;
           _context4.next = 12;
-          return connection.query('INSERT INTO profesores(clave, nombres, apellidos, fnacimiento, email, sexo, estadocivil, tcasa, curp, tcelular, calle, colonia, cp, municipio, estado, estatus, password, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "No hay")', [clave, req.body.nombres, req.body.apellidos, req.body.fnacimiento, req.body.email, req.body.sexo, req.body.estadocivil, req.body.tcasa, req.body.curp, req.body.tcelular, req.body.calle, req.body.colonia, req.body.cp, req.body.municipio, req.body.estado, req.body.estatus, password]);
+          return connection.query('INSERT INTO profesores(clave, nombres, apellidos, fnacimiento, email, sexo, estadocivil, tcasa, curp, tcelular, calle, colonia, cp, municipio, estado, estatus, password, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "default.png")', [clave, req.body.nombres, req.body.apellidos, req.body.fnacimiento, req.body.email, req.body.sexo, req.body.estadocivil, req.body.tcasa, req.body.curp, req.body.tcelular, req.body.calle, req.body.colonia, req.body.cp, req.body.municipio, req.body.estado, req.body.estatus, password]);
         case 12:
           _yield$connection$que7 = _context4.sent;
           _yield$connection$que8 = _slicedToArray(_yield$connection$que7, 1);
@@ -169,7 +168,7 @@ var authProfesores = /*#__PURE__*/function () {
           results = _yield$connection$que10[0];
           if (results.length > 0) {
             results.forEach(function (profesor) {
-              bcrypt.compare(data.password, profesor.password, function (err, isMatch) {
+              _bcrypt["default"].compare(data.password, profesor.password, function (err, isMatch) {
                 if (!isMatch) {
                   res.status(401).json({
                     token: null,
@@ -236,11 +235,11 @@ var updateProfesor = /*#__PURE__*/function () {
       while (1) switch (_context7.prev = _context7.next) {
         case 0:
           _context7.next = 2;
-          return bcrypt.genSalt(10);
+          return _bcrypt["default"].genSalt(10);
         case 2:
           salt = _context7.sent;
           _context7.next = 5;
-          return bcrypt.hash(req.body.password, salt);
+          return _bcrypt["default"].hash(req.body.password, salt);
         case 5:
           password = _context7.sent;
           _context7.next = 8;
@@ -248,7 +247,7 @@ var updateProfesor = /*#__PURE__*/function () {
         case 8:
           connection = _context7.sent;
           _context7.next = 11;
-          return connection.query("UPDATE profesores SET clave=?, nombres=?, apellidos=?, fnacimiento=?, email=?, sexo=?, estadocivil=?, tcasa=?, curp=?, tcelular=?, calle=?, colonia=?, cp=?, municipio=?, estado=?, estatus=?, password=?, foto='No Hay' WHERE clave = ?", [req.body.clave, req.body.nombres, req.body.apellidos, req.body.fnacimiento, req.body.email, req.body.sexo, req.body.estadocivil, req.body.tcasa, req.body.curp, req.body.tcelular, req.body.calle, req.body.colonia, req.body.cp, req.body.municipio, req.body.estado, req.body.estatus, password, req.params.id]);
+          return connection.query("UPDATE profesores SET clave=?, nombres=?, apellidos=?, fnacimiento=?, email=?, sexo=?, estadocivil=?, tcasa=?, curp=?, tcelular=?, calle=?, colonia=?, cp=?, municipio=?, estado=?, estatus=?, password=?, foto='default.png' WHERE clave = ?", [req.body.clave, req.body.nombres, req.body.apellidos, req.body.fnacimiento, req.body.email, req.body.sexo, req.body.estadocivil, req.body.tcasa, req.body.curp, req.body.tcelular, req.body.calle, req.body.colonia, req.body.cp, req.body.municipio, req.body.estado, req.body.estatus, password, req.params.id]);
         case 11:
           results = _context7.sent;
           res.json({
@@ -266,3 +265,32 @@ var updateProfesor = /*#__PURE__*/function () {
   };
 }();
 exports.updateProfesor = updateProfesor;
+var editProfile = /*#__PURE__*/function () {
+  var _ref8 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(req, res) {
+    var connection, results;
+    return _regeneratorRuntime().wrap(function _callee8$(_context8) {
+      while (1) switch (_context8.prev = _context8.next) {
+        case 0:
+          _context8.next = 2;
+          return (0, _database.connect)();
+        case 2:
+          connection = _context8.sent;
+          _context8.next = 5;
+          return connection.query('UPDATE profesores SET ? WHERE ?', req.body, req.params.id);
+        case 5:
+          results = _context8.sent;
+          res.json({
+            status: 200,
+            data: results
+          });
+        case 7:
+        case "end":
+          return _context8.stop();
+      }
+    }, _callee8);
+  }));
+  return function editProfile(_x15, _x16) {
+    return _ref8.apply(this, arguments);
+  };
+}();
+exports.editProfile = editProfile;

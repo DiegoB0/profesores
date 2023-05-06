@@ -308,7 +308,6 @@ const TutoGrupalesAgregar = () => {
 								</div>
 							</div>
 						</div>
-						<ToastContainer />
 
 						{/** Div del Boton */}
 						<div className="block w-full mt-4">

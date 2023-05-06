@@ -88,5 +88,14 @@ router["delete"]('/profesores/:id', _middlewares.verifyToken, _profesores.delete
  *   tags: [Profesores]
  */
 router.put('/profesores/:id', _middlewares.verifyToken, _profesores.updateProfesor);
+
+/**
+ * @swagger
+ * /profesores:
+ *  put:
+ *   summary: Actualiza la foto del perfil de un profesor
+ *   tags: [Profesores]
+ */
+router.put('/profesores/profile/:id', _middlewares.verifyToken, _profesores.editProfile);
 var _default = router;
 exports["default"] = _default;

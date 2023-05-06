@@ -76,10 +76,14 @@ function AsesoriasPage() {
 					<button
 						onClick={() => confirmDeleteDialog(asesoria.id)}
 						className="mr-4"
+						title="Eliminar"
 					>
 						<ion-icon name="trash-outline"></ion-icon>
 					</button>
-					<button onClick={() => navigate(`/asesorias/edit/${asesoria.id}`)}>
+					<button
+						onClick={() => navigate(`/asesorias/edit/${asesoria.id}`)}
+						title="Editar"
+					>
 						<ion-icon name="create-outline"></ion-icon>
 					</button>
 				</td>

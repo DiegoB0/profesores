@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2';
+import image from '../../assets/default.png';
 import { useProfesores } from '../../context/ProfesoresContext';
 
 function ProfesoresPage() {
@@ -62,6 +63,21 @@ function ProfesoresPage() {
 				<td className="w-4 p-4">
 					<div className="flex items-center"></div>
 				</td>
+				<th>
+					{profesores.foto.length === 0 ? (
+						<img
+							src={image}
+							style={{ height: '50px', width: '50px', borderRadius: 50 }}
+							alt="Perfil"
+						/>
+					) : (
+						<img
+							src={profesores.foto}
+							style={{ height: '50px', width: '50px', borderRadius: 50 }}
+							alt="Perfil"
+						/>
+					)}
+				</th>
 				<th
 					scope="row"
 					className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray-700 "
@@ -69,18 +85,19 @@ function ProfesoresPage() {
 					{profesores.nombres} {profesores.apellidos}
 				</th>
 				<td className="px-6 py-4 text-gray-500">{profesores.email}</td>
-				<td className="px-6 py-4 text-gray-500">{profesores.tcasa}</td>
 				<td className="px-6 py-4 text-gray-500">{profesores.tcelular}</td>
 				<td className="px-6 py-4 text-gray-500">{profesores.password}</td>
 				<td className="px-6 py-4 text-gray-600">
 					<button
 						onClick={() => confirmDeleteDialog(profesores.clave)}
 						className="mr-4"
+						title="Eliminar"
 					>
 						<ion-icon name="trash-outline"></ion-icon>
 					</button>
 					<button
 						onClick={() => navigate(`/profesores/edit/${profesores.clave}`)}
+						title="Editar"
 					>
 						<ion-icon name="create-outline"></ion-icon>
 					</button>
@@ -150,13 +167,13 @@ function ProfesoresPage() {
 								</div>
 							</th>
 							<th scope="col" className="px-6 py-3">
+								Foto
+							</th>
+							<th scope="col" className="px-6 py-3">
 								Nombre
 							</th>
 							<th scope="col" className="px-6 py-3">
 								Email
-							</th>
-							<th scope="col" className="px-6 py-3">
-								Telefono de Casa
 							</th>
 							<th scope="col" className="px-6 py-3">
 								Telefono Celular

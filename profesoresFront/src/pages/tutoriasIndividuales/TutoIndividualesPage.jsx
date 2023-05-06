@@ -80,6 +80,7 @@ const TutoIndividualesPage = () => {
 					<button
 						onClick={() => confirmDeleteDialog(tutoria.id)}
 						className="mr-4"
+						title="Eliminar"
 					>
 						<ion-icon name="trash-outline"></ion-icon>
 					</button>
@@ -87,6 +88,7 @@ const TutoIndividualesPage = () => {
 						onClick={() =>
 							navigate(`/tutorias/individuales/edit/${tutoria.id}`)
 						}
+						title="Editar"
 					>
 						<ion-icon name="create-outline"></ion-icon>
 					</button>

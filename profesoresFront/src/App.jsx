@@ -15,6 +15,7 @@ import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import ProfesoresAgregar from './pages/profesores/ProfesoresAgregar';
 import ProfesoresPage from './pages/profesores/ProfesoresPage';
+import ProfesoresPerfil from './pages/profesores/ProfesoresPerfil';
 import TutoriasCards from './pages/TutoriasCards';
 import TutoGrupalesAgregar from './pages/tutoriasGrupales/TutoGrupalesAgregar';
 import TutoGrupalesPage from './pages/tutoriasGrupales/TutoGrupalesPage';
@@ -38,6 +39,10 @@ function App() {
 										<Route
 											path="/profesores"
 											element={<ProfesoresPage />}
+										></Route>
+										<Route
+											path="/perfil/:id"
+											element={<ProfesoresPerfil />}
 										></Route>
 										<Route
 											path="/asesorias"

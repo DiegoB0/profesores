@@ -12,12 +12,12 @@ export const useUsers = () => {
 
 export const UsersContextProvider = ({ children }) => {
 	const [users, setUsers] = useState([]);
+	const [userData, setUserData] = useState([]);
 
 	const authUsers = async (profesor) => {
 		try {
 			const response = await authUsersRequest(profesor);
-
-			return response.data.token;
+			return response.data;
 		} catch (err) {
 			console.log(err);
 		}
@@ -29,6 +29,8 @@ export const UsersContextProvider = ({ children }) => {
 				users,
 				authUsers,
 				setUsers,
+				userData,
+				setUserData,
 			}}
 		>
 			{children}

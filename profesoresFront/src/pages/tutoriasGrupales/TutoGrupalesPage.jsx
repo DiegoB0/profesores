@@ -77,11 +77,13 @@ const TutoGrupalesPage = () => {
 					<button
 						onClick={() => confirmDeleteDialog(tutoria.id)}
 						className="mr-4"
+						title="Eliminar"
 					>
 						<ion-icon name="trash-outline"></ion-icon>
 					</button>
 					<button
 						onClick={() => navigate(`/tutorias/grupales/edit/${tutoria.id}`)}
+						title="Editar"
 					>
 						<ion-icon name="create-outline"></ion-icon>
 					</button>

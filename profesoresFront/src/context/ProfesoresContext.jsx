@@ -2,6 +2,7 @@ import { createContext, useContext, useState } from 'react';
 import {
 	createProfesorRequest,
 	deleteProfesorRequest,
+	editProfileRequest,
 	getProfesoresRequest,
 	getProfesorRequest,
 	updateProfesorRequest,
@@ -20,6 +21,7 @@ export const useProfesores = () => {
 
 export const ProfesoresContextProvider = ({ children }) => {
 	const [profesores, setProfesores] = useState([]);
+	const [profesoresFoto, setProfesoresFoto] = useState([]);
 	const { users } = useUsers();
 
 	let headers = {
@@ -28,6 +30,7 @@ export const ProfesoresContextProvider = ({ children }) => {
 
 	async function loadProfesores() {
 		const response = await getProfesoresRequest(headers);
+		console.log(response.data.data);
 		setProfesores(response.data.data);
 	}
 
@@ -76,6 +79,16 @@ export const ProfesoresContextProvider = ({ children }) => {
 		}
 	};
 
+	const editProfile = async (id, newFields) => {
+		try {
+			const response = await editProfileRequest(id, newFields);
+			// console.log(response.data.data.email);
+			return response.data.data;
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	return (
 		<ProfesoresContext.Provider
 			value={{
@@ -86,6 +99,9 @@ export const ProfesoresContextProvider = ({ children }) => {
 				getProfesor,
 				updateProfesor,
 				validateProfesor,
+				editProfile,
+				profesoresFoto,
+				setProfesoresFoto,
 			}}
 		>
 			{children}

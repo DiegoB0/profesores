@@ -1,15 +1,15 @@
 import { Form, Formik } from 'formik';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2';
 import image from '../assets/login.png';
 import CustomInput from '../components/CustomInput';
 import { useUsers } from '../context/UsersContext';
 import { loginSchema } from '../schemas/login';
 
 const Login = () => {
-	const { users, authUsers, setUsers } = useUsers();
+	const { authUsers, setUsers, userData, setUserData } = useUsers();
 	const navigate = useNavigate();
 
 	const notifyError = () =>
@@ -23,6 +23,17 @@ const Login = () => {
 			progress: undefined,
 			theme: 'light',
 		});
+	function LoggedIn() {
+		Swal.fire({
+			title: '<small>Bienvenido de nuevo </small> ',
+			text: ` ¿Que tal? `,
+			icon: 'success',
+			confirmButtonText: 'OK',
+			confirmButtonColor: '#9333EA',
+		}).then(() => {
+			navigate('/home');
+		});
+	}
 
 	return (
 		<div className="h-full bg-gray-200 px-3 py-16 rounded-xl">
@@ -52,9 +63,9 @@ const Login = () => {
 						onSubmit={async (values, { resetForm }) => {
 							const response = await authUsers(values);
 							if (response) {
-								navigate('/home');
-								setUsers(response);
-								console.log(users);
+								setUserData(response.user);
+								setUsers(response.token);
+								LoggedIn();
 							} else {
 								notifyError();
 							}

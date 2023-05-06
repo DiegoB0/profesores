@@ -1,7 +1,8 @@
+import bcrypt from 'bcrypt';
+import fs from 'fs-extra';
 import jwt from 'jsonwebtoken';
 import { connect } from '../database';
-const bcrypt = require('bcrypt');
-const myPlainTextPassword = 's0//P4$$w0rD';
+import { deleteImage, uploadImage } from '../libs/cloudinary';
 
 export const getProfesores = async (req, res) => {
 	const connection = await connect();
@@ -40,7 +41,7 @@ export const saveProfesor = async (req, res) => {
 	const password = await bcrypt.hash(req.body.password, salt);
 	const connection = await connect();
 	const [results] = await connection.query(
-		'INSERT INTO profesores(clave, nombres, apellidos, fnacimiento, email, sexo, estadocivil, tcasa, curp, tcelular, calle, colonia, cp, municipio, estado, estatus, password, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "No hay")',
+		'INSERT INTO profesores(clave, nombres, apellidos, fnacimiento, email, sexo, estadocivil, tcasa, curp, tcelular, calle, colonia, cp, municipio, estado, estatus, password, foto, public_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "", "Not yet")',
 		[
 			clave,
 			req.body.nombres,
@@ -83,7 +84,7 @@ export const authProfesores = async (req, res) => {
 						expiresIn: 86400,
 					});
 
-					res.json({ token });
+					res.json({ token, user: profesor });
 				}
 			});
 		});
@@ -98,6 +99,11 @@ export const deleteProfesor = async (req, res) => {
 		'DELETE FROM profesores WHERE clave = ?',
 		[req.params.id]
 	);
+
+	if (result.public_id) {
+		await deleteImage(result.public_id);
+	}
+
 	res.sendStatus(200);
 };
 
@@ -106,7 +112,7 @@ export const updateProfesor = async (req, res) => {
 	const password = await bcrypt.hash(req.body.password, salt);
 	const connection = await connect();
 	const results = await connection.query(
-		"UPDATE profesores SET clave=?, nombres=?, apellidos=?, fnacimiento=?, email=?, sexo=?, estadocivil=?, tcasa=?, curp=?, tcelular=?, calle=?, colonia=?, cp=?, municipio=?, estado=?, estatus=?, password=?, foto='No Hay' WHERE clave = ?",
+		'UPDATE profesores SET clave=?, nombres=?, apellidos=?, fnacimiento=?, email=?, sexo=?, estadocivil=?, tcasa=?, curp=?, tcelular=?, calle=?, colonia=?, cp=?, municipio=?, estado=?, estatus=?, password=? WHERE clave = ?',
 		[
 			req.body.clave,
 			req.body.nombres,
@@ -134,3 +140,42 @@ export const updateProfesor = async (req, res) => {
 		data: results,
 	});
 };
+
+export const editProfile = async (req, res) => {
+	const { email } = req.body;
+	let foto;
+	let public_id;
+
+	if (req.files.foto) {
+		const result = await uploadImage(req.files.foto.tempFilePath);
+		await fs.remove(req.files.foto.tempFilePath);
+		console.log('Subido a cloudinary pitochico');
+
+		foto = result.url;
+		public_id = result.public_id;
+	}
+	console.log(req.params.id);
+	const connection = await connect();
+	const [results] = await connection.query(
+		'UPDATE profesores SET email=?, foto=?, public_id=? WHERE clave=?',
+		[email, foto, public_id, req.params.id]
+	);
+
+	if (results) {
+		await connection.query(
+			'INSERT INTO images (url, public_id, profesor) VALUES(?, ?, ?)',
+			[foto, public_id, req.params.id]
+		);
+		console.log('Guardado en la tabla de imagenes pa');
+	}
+
+	res.json({
+		status: 200,
+		data: {
+			email,
+			foto,
+		},
+	});
+};
+
+export const postImage = async (req, res) => {};

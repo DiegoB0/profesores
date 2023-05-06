@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
 	authProfesores,
 	deleteProfesor,
+	editProfile,
 	getProfesor,
 	getProfesores,
 	getProfesoresCount,
@@ -29,6 +30,16 @@ const router = Router();
  *
  */
 router.get('/profesores', verifyToken, getProfesores);
+
+/**
+ * @swagger
+ * /profesores:
+ *  get:
+ *   summary: Obtiene todas los profesores
+ *   tags: [Profesores]
+ *
+ */
+router.get('/erick', getProfesores);
 
 /**
  * @swagger
@@ -92,5 +103,14 @@ router.delete('/profesores/:id', verifyToken, deleteProfesor);
  *   tags: [Profesores]
  */
 router.put('/profesores/:id', verifyToken, updateProfesor);
+
+/**
+ * @swagger
+ * /profesores:
+ *  put:
+ *   summary: Actualiza la foto del perfil de un profesor
+ *   tags: [Profesores]
+ */
+router.put('/profesores/profile/:id', editProfile);
 
 export default router;

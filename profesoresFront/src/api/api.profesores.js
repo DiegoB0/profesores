@@ -25,3 +25,21 @@ export const updateProfesorRequest = async (id, newFields, headers) =>
 	await axios.put(`http://localhost:5000/profesores/${id}`, newFields, {
 		headers: headers,
 	});
+
+export const editProfileRequest = async (id, newFields) => {
+	const form = new FormData();
+
+	for (let key in newFields) {
+		form.append(key, newFields[key]);
+	}
+
+	return await axios.put(
+		`http://localhost:5000/profesores/profile/${id}`,
+		form,
+		{
+			headers: {
+				'Content-Type': 'multipart/form-data',
+			},
+		}
+	);
+};

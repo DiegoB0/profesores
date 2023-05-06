@@ -1,5 +1,6 @@
 import cors from 'cors';
 import express from 'express';
+import fileUpload from 'express-fileupload';
 import morgan from 'morgan';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
@@ -10,11 +11,6 @@ import asesoriasRoutes from './routes/asesorias';
 import profesoresRoutes from './routes/profesores';
 import tutoriasGrupales from './routes/tutoriasGrupales';
 import tutoriasIndividuales from './routes/tutoriasIndividuales';
-// const bcrypt = require('bcrypt');
-// const fileUpload = require('express-fileupload');
-
-// const saltRounds = 10;
-// const myPlainTextPassword = 's0//P4$$w0rD';
 
 import { options } from './swaggerOptions';
 const specs = swaggerJSDoc(options);
@@ -26,7 +22,12 @@ const app = express();
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
-// app.use(fileUpload());
+app.use(
+	fileUpload({
+		useTempFiles: true,
+		tempFileDir: './uploads/',
+	})
+);
 
 //////////////////////////////// RUTAS DE LA API ///////////////////////////////////////////////
 app.use(profesoresRoutes);
